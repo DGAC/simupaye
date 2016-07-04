@@ -14,9 +14,18 @@ var compute_income = function(){
         indice = parseInt($('#echelon option:selected').val());
     }
 
-    var nbi = parseInt($('#age option:selected').val());
+    if(isNaN(indice)) {
+        indice = 0;
+    }
+
+    var nbi = 0;
+    var temp = parseInt($('#age option:selected').val());
+    if(!isNaN(temp)) {
+        nbi = temp;
+    }
 
     var traitement_brut = (indice + nbi)*point_indice;
+
 
     //indemnité résidence
     var indem = 0;
@@ -43,7 +52,14 @@ var compute_income = function(){
 
     //part fonction
     var fonction = $("#fonction option:selected").val();
-    var part_fonction = evs[fonction] + pcs;
+    var part_fonction = 0;
+    if(typeof (fonction) != "undefined") {
+        var evsV = evs[fonction];
+        if(typeof (evsV) === undefined || isNaN(evsV)) {
+            evsV = 0;
+        }
+        part_fonction = evsV + pcs;
+    }
 
     //part expé
     var grade = $("#grade option:selected").val();
@@ -55,7 +71,10 @@ var compute_income = function(){
     }
 
     //part qualif
-    var part_qualif = qualif[grade][echelon];
+    var part_qualif = 0;
+    if(typeof (grade) != "undefined" && !isNaN(echelon)) {
+        part_qualif = qualif[grade][echelon];
+    }
 
     var total_pos = traitement_brut + part_fonction + part_qualif + part_xp + indem;
     
@@ -101,7 +120,37 @@ var compute_income = function(){
 };
 
 var initForm = function () {
-    $("#conditions select:gt(0)").attr('disabled', true).empty();
+    var grade = $('#grade');
+    grade.append($('<option disabled selected value> -- Sélectionner un grade -- </option>'));
+    $.each(grades, function(index, value){
+        var option = $('<option>' + value + '</option>');
+        grade.append(option);
+    });
+
+    var service = $("#service");
+    service.attr('disabled', false);
+    service.empty();
+    service.append($('<option disabled selected value> -- Sélectionner un service -- </option>'));
+    for(var prop in fonctions) {
+        service.append($('<option>' + prop + "</option>"));
+    }
+
+    var emploi = $("#emploi_fonctionnel");
+    emploi.append($('<option disabled selected value> -- Sélectionner un emploi fonctionnel -- </option>'));
+    $.each(emplois_fonctionnel, function(index, value){
+        var option = $("<option>" + value + "</option>");
+        emploi.append(option);
+    });
+
+    $('#region').append($('<option disabled selected value> -- Sélectionner un barême -- </option>'));
+    $('#region').append($('<option value="0">0%</option>'));
+    $('#region').append($('<option value="1">1%</option>'));
+    $('#region').append($('<option value="3">3%</option>'));
+
+    $('#pcs').append($('<option disabled selected value> -- Sélectionner un barême -- </option>'));
+    $('#pcs').append($('<option value="0">0 €</option>'));
+    $('#pcs').append($('<option value="102.40">102,40 €</option>'));
+    $('#pcs').append($('<option value="153.60">153,60 €</option>'));
 };
 
 var remplir_echelon = function(){
@@ -159,49 +208,38 @@ var remplir_echelon = function(){
 
 $(document).ready(function(){
 
-    var grade = $('#grade');
-    grade.append($('<option disabled selected value> -- Sélectionner un grade -- </option>'));
-    $.each(grades, function(index, value){
-        var option = $('<option>' + value + '</option>');
-        grade.append(option);
-    });
+    initForm();
 
     $('#grade').on('change', function(e){
-        initForm();
+
         var val = $(this).val();
+        var emploi = $("#emploi_fonctionnel");
+        var echelonbis = $("#echelonbis");
         if(val.localeCompare('principal') == 0){
-            var emploi = $("#emploi_fonctionnel");
-            emploi.append($('<option disabled selected value> -- Sélectionner un emploi fonctionnel -- </option>'));
-            $.each(emplois_fonctionnel, function(index, value){
-                var option = $("<option>" + value + "</option>");
-                emploi.append(option);
-            });
             emploi.attr('disabled', false);
         } else {
+            emploi.attr('disabled', true);
+            echelonbis.attr('disabled', true);
             remplir_echelon();
         }
+        compute_income();
     });
 
     $("#emploi_fonctionnel").on('change', function(e){
         remplir_echelon();
+        compute_income();
     });
 
     $("#echelon").on('change', function(e){
-        $("#age").attr('disabled', false);
-        var age = $("#age");
-        age.append("<option disabled selected value> -- Sélectionner l'âge -- </option>");
-        age.append('<option value="0">Infèrieur à 35 ans</option>');
-        age.append('<option value="75">Supèrieur ou égal à 35 ans</option>');
+        compute_income();
+    });
+
+    $("#echelonbis").on('change', function(e){
+        compute_income();
     });
 
     $('#age').on('change', function(e){
-        var service = $("#service");
-        service.attr('disabled', false);
-        service.empty();
-        service.append($('<option disabled selected value> -- Sélectionner un service -- </option>'));
-        for(var prop in fonctions) {
-            service.append($('<option>' + prop + "</option>"));
-        }
+        compute_income();
     });
 
     $("#service").on('change', function(e){
@@ -213,24 +251,11 @@ $(document).ready(function(){
         for(var prop in fonctions[val]) {
             fonction.append($('<option value="'+fonctions[val][prop]+'">'+prop+'</option>'));
         }
+        compute_income();
     });
 
     $("#fonction").on('change', function(e){
         compute_income();
-        $("#region").attr('disabled', false);
-        $('#region').empty();
-        $('#region').append($('<option disabled selected value> -- Sélectionner un barême -- </option>'));
-        $('#region').append($('<option value="0">0%</option>'));
-        $('#region').append($('<option value="1">1%</option>'));
-        $('#region').append($('<option value="3">3%</option>'));
-
-        $("#pcs").attr('disabled', false);
-        $("#pcs").empty();
-        $('#pcs').append($('<option disabled selected value> -- Sélectionner un barême -- </option>'));
-        $('#pcs').append($('<option value="0">0 €</option>'));
-        $('#pcs').append($('<option value="102.40">102,40 €</option>'));
-        $('#pcs').append($('<option value="153.60">153,60 €</option>'));
-        
     });
 
     $("#region").on('change', function(e) {
