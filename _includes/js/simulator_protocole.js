@@ -2,32 +2,10 @@
  * Created by Bruno Spyckerelle on 03/07/16.
  */
 
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
-};
-
 var compute_income = function(){
-
-    var activity_rate = activity_rate_2015;
-    var prime_tech = prime_tech_2015;
-    var rsi = rsi_2015;
-
-    if(year.localeCompare("2016") == 0) {
-        activity_rate = activity_rate_2016;
-        prime_tech = prime_tech_2016;
-        rsi = rsi_2016;
-    }
+    var activity_rate = activity_rate_2016;
+    var prime_tech = prime_tech_2016;
+    var rsi = rsi_2016;
 
     var echelon = parseInt($('#echelon option:selected').text());
 
@@ -54,12 +32,6 @@ var compute_income = function(){
 
     var traitement_brut = (indice + nbi)*point_indice;
 
-    //majoration géographique
-    var maj = 1;
-    temp = $('#affect option:selected').val();
-    if(temp.localeCompare("n-ne") == 0) {
-        maj = 1.05;
-    }
 
     //indemnité résidence
     var indem = 0;
@@ -84,48 +56,63 @@ var compute_income = function(){
         pcs = temp;
     }
 
-    //rsi
+    //part fonction
     var fonction = $("#fonction option:selected").val();
-    var rsiV = 0;
+    var part_fonction = 0;
     if(typeof (fonction) != "undefined") {
-        var rsiT = rsi[fonction];
-        if(typeof (rsiT) === undefined || isNaN(rsiT)) {
-            rsiT = 0;
+        var evsV = evs[fonction];
+        if(typeof (evsV) === undefined || isNaN(evsV)) {
+            evsV = 0;
         }
-        rsiV = rsiT * 696 * point_indice * activity_rate / 100 * maj;
+        part_fonction = evsV + pcs;
     }
 
-    //prime activité
+    //part expé
     var grade = $("#grade option:selected").val();
-    var prime_activity = activity_rate / 100 * indice * point_indice * maj;
-
-    //prime technicité
-    var technicity = 0;
-    if(typeof (grade) != "undefined") {
-        if(grade.localeCompare("normal") == 0) {
-            technicity = prime_tech.normal;
-        } else if (grade.localeCompare("principal") == 0 || (grade.localeCompare("hors classe") == 0)) {
-            technicity = prime_tech.principal;
-        } 
+    var part_xp = 0;
+    if(grade.localeCompare('normal') == 0){
+        part_xp = xp["4"];
+    } else {
+        part_xp = xp["5"];
     }
 
-    //indemnité spéciale
-    var special = 178 / 100 * prime_tech.principal;
+    //part qualif
+    var part_qualif = 0;
+    if(typeof (grade) != "undefined" && !isNaN(echelon)) {
+        part_qualif = qualif[grade][echelon];
+    }
 
-    var total_pos = traitement_brut + rsiV + prime_activity + technicity + special + indem + pcs;
+    //supplément familial
+    var indiceSFT = Math.min(Math.max(indice, 449), 716);
+    var nombreEnfants = 0;
+    var enfants = parseInt($("#famille").val());
+    if(!isNaN(enfants)) {
+        nombreEnfants = enfants;
+    }
+    //nombre d'enfants sup à 3
+    var enfantsSupp = Math.max(0, nombreEnfants - 3);
+    //nombre d'enfants <= 3
+    var enfantsMoins = Math.min(nombreEnfants, 3);
+    var sft = 0;
+    if(nombreEnfants > 0) {
+        sft = sft_fixe[enfantsMoins] + sft_prop[enfantsMoins] / 100 * indiceSFT * point_indice
+            + enfantsSupp * (sft_fixe["4"] + sft_prop["4"] / 100 * indiceSFT * point_indice);
+    }
+
+    $("#sft").text(sft.toFixed(2));
+
+    var total_pos = traitement_brut + part_fonction + part_qualif + part_xp + indem;
     
     $('#traitement_brut').text(traitement_brut.toFixed(2));
-    $('#rsi').text(rsiV.toFixed(2));
-    $('#activity').text(prime_activity.toFixed(2));
-    $("#tech").text(technicity.toFixed(2));
-    $("#pcsV").text(pcs.toFixed(2));
-    $("#special").text(special.toFixed(2));
+    $('#part_fonction').text(part_fonction.toFixed(2));
+    $('#part_xp').text(part_xp.toFixed(2));
+    $("#part_qualif").text(part_qualif.toFixed(2));
 
     //retenue pour pension civile
     var rpc = traitement_brut *  rpc_rate / 100;
 
     //rafp
-    var base_rafp = prime_activity + technicity + rsiV + special + pcs + indem;
+    var base_rafp = part_fonction + part_qualif + part_xp + indem;
     var rafp = 0;
     if(base_rafp < indice * point_indice * 20 / 100) {
         rafp = 5 / 100 * base_rafp;
@@ -149,25 +136,6 @@ var compute_income = function(){
     $("#rpc").text(rpc.toFixed(2));
     $("#crds").text(crds.toFixed(2));
     $('#cs').text(cs.toFixed(2));
-
-    //supplément familial
-    var indiceSFT = Math.min(Math.max(indice, 449), 716);
-    var nombreEnfants = 0;
-    var enfants = parseInt($("#famille").val());
-    if(!isNaN(enfants)) {
-        nombreEnfants = enfants;
-    }
-    //nombre d'enfants sup à 3
-    var enfantsSupp = Math.max(0, nombreEnfants - 3);
-    //nombre d'enfants <= 3
-    var enfantsMoins = Math.min(nombreEnfants, 3);
-    var sft = 0;
-    if(nombreEnfants > 0) {
-        sft = sft_fixe[enfantsMoins] + sft_prop[enfantsMoins] / 100 * indiceSFT * point_indice
-        + enfantsSupp * (sft_fixe["4"] + sft_prop["4"] / 100 * indiceSFT * point_indice);
-    }
-
-    $("#sft").text(sft.toFixed(2));
 
     var total_neg = rafp + cs + csg_deduc + csg_non_deduc + rpc + crds;
 
@@ -263,17 +231,9 @@ var remplir_echelon = function(){
     }
 };
 
-var year = "2015";
-
 $(document).ready(function(){
 
     initForm();
-
-    year = getUrlParameter("year");
-    if(typeof (year) == "undefined") {
-        year = "2016";
-    }
-    $("#year").text(year);
 
     $('#grade').on('change', function(e){
 
@@ -317,8 +277,8 @@ $(document).ready(function(){
         fonction.empty();
         fonction.append($('<option disabled selected value> -- Sélectionner une fonction -- </option>'));
         var val = $(this).val();
-        for(var prop in fonctions_rsi[val]) {
-            fonction.append($('<option value="'+fonctions_rsi[val][prop]+'">'+prop+'</option>'));
+        for(var prop in fonctions[val]) {
+            fonction.append($('<option value="'+fonctions[val][prop]+'">'+prop+'</option>'));
         }
         compute_income();
     });
@@ -327,16 +287,12 @@ $(document).ready(function(){
         compute_income();
     });
 
-    $("#famille").on('change', function(e){
-        compute_income();
-    });
-
-    $("#affect").on('change', function(e){
-        compute_income();
-    });
-    
     $("#region").on('change', function(e) {
        compute_income();
+    });
+
+    $('#famille').on('change', function(e){
+        compute_income();
     });
 
     $('#pcs').on('change', function(e){

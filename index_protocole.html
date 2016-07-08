@@ -6,11 +6,12 @@ js:
 - js/datas/grilles.js
 - js/datas/services.js
 - js/datas/const.js
-- js/simulator.js
+- js/simulator_protocole.js
 ---
 
 <div class="alert alert-warning">
-Version valable à partir du 1er juillet <span id="year">2016</span>
+Version valable à partir du protocole 2016-2019<br>
+    Toutes les données ne sont pas encore disponibles.
 </div>
 
 <div class="row">
@@ -22,7 +23,7 @@ Version valable à partir du 1er juillet <span id="year">2016</span>
           <div class="col-sm-9">
               <select class="form-control" id="grade"></select>
           </div>
-        </div>
+      </div>
       <div class="form-group">
           <label for="echelon" class="col-sm-3 control-label">Échelon</label>
           <div class="col-sm-9">
@@ -61,16 +62,6 @@ Version valable à partir du 1er juillet <span id="year">2016</span>
           <label for="fonction" class="col-sm-3 control-label">Fonction</label>
           <div class="col-sm-9">
               <select class="form-control" id="fonction" disabled></select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="affect" class="col-sm-3 control-label">Site d'affectation</label>
-          <div class="col-sm-9">
-            <select class="form-control" id="affect">
-                <option disabled selected value> -- Sélectionner votre site d'affectation -- </option>
-                <option value="n-ne">Nord/Nord-Est</option>
-                <option value="other">Autre</option>
-            </select>
           </div>
       </div>
       <div class="form-group">
@@ -114,24 +105,16 @@ Version valable à partir du 1er juillet <span id="year">2016</span>
                 <td id="indem_res"></td>
             </tr>
             <tr class="active">
-                <td>Prime d'activité</td>
-                <td id="activity"></td>
+                <td>Part fonction</td>
+                <td id="part_fonction"></td>
             </tr>
             <tr class="active">
-                <td>RSI</td>
-                <td id="rsi"></td>
+                <td>Part expérience</td>
+                <td id="part_xp"></td>
             </tr>
             <tr class="active">
-                <td>Prime de technicité</td>
-                <td id="tech"></td>
-            </tr>
-            <tr class="active">
-                <td>Indemnité spéciale</td>
-                <td id="special"></td>
-            </tr>
-            <tr class="active">
-                <td>Prime de contrainte de service</td>
-                <td id="pcsV"></td>
+                <td>Part qualification</td>
+                <td id="part_qualif"></td>
             </tr>
             <tr class="active">
                 <td>Supplément familial</td>

@@ -19,6 +19,14 @@
           <li><a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
           {% endif %}
         {% endfor %}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Versions <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ site.baseurl }}/index_protocole.html">Protocole 2016-2019</a></li>
+            <li><a href="{{ site.baseurl}}/?year=2015">Version avant 1er juillet 2016</a></li>
+            <li><a href="{{ site.baseurl}}/?year=2016">Version après 1er juillet 2016</a></li>
+          </ul>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
