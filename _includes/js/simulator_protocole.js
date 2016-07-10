@@ -302,4 +302,6 @@ $(document).ready(function(){
     $('#rembt').on('change', function(e){
         compute_income();
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
 });

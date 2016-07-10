@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: simulator
 js:
 - js/datas/grades.js
 - js/datas/emploi_fonctionnel.js
@@ -58,7 +58,7 @@ Version valable à partir du 1er juillet <span id="year">2016</span>
           </div>
       </div>
       <div class="form-group">
-          <label for="fonction" class="col-sm-3 control-label">Fonction</label>
+          <label for="fonction" class="col-sm-3 control-label">Fonction<sup data-toggle="tooltip" title="Votre poste est absent ? Contactez-nous !">?</sup></label>
           <div class="col-sm-9">
               <select class="form-control" id="fonction" disabled></select>
           </div>
@@ -74,7 +74,7 @@ Version valable à partir du 1er juillet <span id="year">2016</span>
           </div>
       </div>
       <div class="form-group">
-          <label for="region" class="col-sm-3 control-label">Région</label>
+          <label for="region" class="col-sm-3 control-label">Zone<sup><a data-toggle="tooltip" title="Comment déterminer mon barême ?" data-placement="top" href="http://www.fonction-publique.gouv.fr/indemnites-de-residence-et-supplement-familial-de-traitement" target="_blank">?</a></sup></label>
           <div class="col-sm-9">
               <select class="form-control" id="region">
               </select>
@@ -96,7 +96,7 @@ Version valable à partir du 1er juillet <span id="year">2016</span>
       <div class="form-group">
           <label for="rembt" class="col-sm-3 control-label">Remboursement dom-travail</label>
           <div class="col-sm-9">
-              <input type="text" class="form-control" id="rembt">
+              <input type="text" class="form-control" id="rembt" placeholder="Montant en euros">
           </div>
       </div>
   </form>
