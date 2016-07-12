@@ -79,7 +79,7 @@ var compute_income = function(){
 
     //pcs
     var pcs = 0;
-    temp = parseInt($('#pcs option:selected').val());
+    temp = parseFloat($('#pcs option:selected').val());
     if(!isNaN(temp)) {
         pcs = temp;
     }

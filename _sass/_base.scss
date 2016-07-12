@@ -204,3 +204,11 @@ pre {
         }
     }
 }
+
+.result .table td:nth-child(2) {
+    text-align: right;
+}
+
+.result .table td:nth-child(2)::after{
+    content: " €";
+}

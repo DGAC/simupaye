@@ -51,7 +51,7 @@ var compute_income = function(){
 
     //pcs
     var pcs = 0;
-    temp = parseInt($('#pcs option:selected').val());
+    temp = parseFloat($('#pcs option:selected').val());
     if(!isNaN(temp)) {
         pcs = temp;
     }
@@ -176,9 +176,12 @@ var initForm = function () {
     $('#pcs').append($('<option value="0">0 €</option>'));
     $('#pcs').append($('<option value="102.40">102,40 €</option>'));
     $('#pcs').append($('<option value="153.60">153,60 €</option>'));
+
+    $("#emploi_fonctionnel").closest('.form-group').hide();
+    $("#echelonbis").closest('.form-group').hide();
 };
 
-var remplir_echelon = function(){
+var remplir_echelon_normaux = function() {
     var grille = [];
 
     //échelons normaux
@@ -200,10 +203,11 @@ var remplir_echelon = function(){
     echelon.empty();
     echelon.attr('disabled', false);
     echelon.append($('<option disabled selected value> -- Sélectionner un échelon -- </option>'));
-    for(var prop in grille) {
-        echelon.append($('<option value="'+grille[prop]+'">'+prop+'</option>'));
+    for (var prop in grille) {
+        echelon.append($('<option value="' + grille[prop] + '">' + prop + '</option>'));
     }
-
+};
+var remplir_echelon_fonctionnels = function(){
     //échelons fonctionnels
     var grillebis = [];
     if($("#grade").val().localeCompare('principal') == 0) {
@@ -241,22 +245,21 @@ $(document).ready(function(){
         var emploi = $("#emploi_fonctionnel");
         var echelonbis = $("#echelonbis");
         if(val.localeCompare('principal') == 0){
-            emploi.attr('disabled', false);
-            echelonbis.attr('disabled', false);
-            remplir_echelon();
+            emploi.attr('disabled', false).closest('.form-group').show();
+            echelonbis.attr('disabled', false).closest('.form-group').show();
         } else {
             emploi.show();
             echelonbis.show();
-            emploi.attr('disabled', true);
-            echelonbis.attr('disabled', true);
-            remplir_echelon();
+            emploi.attr('disabled', true).closest('.form-group').hide();
+            echelonbis.attr('disabled', true).closest('.form-group').hide();
         }
+        remplir_echelon_normaux();
         compute_income();
     });
 
     $("#emploi_fonctionnel").on('change', function(e){
         compute_income();
-        remplir_echelon();
+        remplir_echelon_fonctionnels();
     });
 
     $("#echelon").on('change', function(e){
