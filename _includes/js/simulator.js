@@ -22,11 +22,13 @@ var compute_income = function(){
     var activity_rate = activity_rate_2015;
     var prime_tech = prime_tech_2015;
     var rsi = rsi_2015;
+    var point_indice = point_indice_2015;
 
     if(year.localeCompare("2016") == 0) {
         activity_rate = activity_rate_2016;
         prime_tech = prime_tech_2016;
         rsi = rsi_2016;
+        point_indice = point_indice_2016;
     }
 
     var echelon = parseInt($('#echelon option:selected').text());
@@ -97,7 +99,8 @@ var compute_income = function(){
 
     //prime activité
     var grade = $("#grade option:selected").val();
-    var prime_activity = activity_rate / 100 * indice * point_indice * maj;
+    var indiceActivity = Math.min(696, indice);
+    var prime_activity = activity_rate / 100 * indiceActivity * point_indice * maj;
 
     //prime technicité
     var technicity = 0;

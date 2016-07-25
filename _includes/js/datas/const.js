@@ -1,4 +1,6 @@
-var point_indice = 4.6303;
+var point_indice_2015 = 4.6303;
+
+var point_indice_2016 = 4.6580;
 
 var rpc_rate = 9.94;
 
