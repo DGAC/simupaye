@@ -63,7 +63,7 @@ var compute_income = function(){
 
     //indemnité résidence
     var indem = 0;
-    var temp = parseInt($('#region option:selected').val()) / 100 * (indice * point_indice);
+    var temp = parseInt($('#region option:selected').val()) / 100 * (traitement_brut);
     if(!isNaN(temp)) {
         indem = temp;
     }
@@ -109,10 +109,27 @@ var compute_income = function(){
         } 
     }
 
+    //supplément familial
+    var indiceSFT = Math.min(Math.max((indice+nbi), 449), 716);
+    var nombreEnfants = 0;
+    var enfants = parseInt($("#famille").val());
+    if(!isNaN(enfants)) {
+        nombreEnfants = enfants;
+    }
+    //nombre d'enfants sup à 3
+    var enfantsSupp = Math.max(0, nombreEnfants - 3);
+    //nombre d'enfants <= 3
+    var enfantsMoins = Math.min(nombreEnfants, 3);
+    var sft = 0;
+    if(nombreEnfants > 0) {
+        sft = sft_fixe[enfantsMoins] + sft_prop[enfantsMoins] / 100 * indiceSFT * point_indice
+            + enfantsSupp * (sft_fixe["4"] + sft_prop["4"] / 100 * indiceSFT * point_indice);
+    }
+
     //indemnité spéciale
     var special = 178 / 100 * prime_tech.principal;
 
-    var total_pos = traitement_brut + rsiV + prime_activity + technicity + special + indem + pcs;
+    var total_pos = traitement_brut + rsiV + prime_activity + technicity + special + indem + pcs + sft;
     
     $('#traitement_brut').text(traitement_brut.toFixed(2));
     $('#rsi').text(rsiV.toFixed(2));
@@ -150,28 +167,11 @@ var compute_income = function(){
     $("#crds").text(crds.toFixed(2));
     $('#cs').text(cs.toFixed(2));
 
-    //supplément familial
-    var indiceSFT = Math.min(Math.max(indice, 449), 716);
-    var nombreEnfants = 0;
-    var enfants = parseInt($("#famille").val());
-    if(!isNaN(enfants)) {
-        nombreEnfants = enfants;
-    }
-    //nombre d'enfants sup à 3
-    var enfantsSupp = Math.max(0, nombreEnfants - 3);
-    //nombre d'enfants <= 3
-    var enfantsMoins = Math.min(nombreEnfants, 3);
-    var sft = 0;
-    if(nombreEnfants > 0) {
-        sft = sft_fixe[enfantsMoins] + sft_prop[enfantsMoins] / 100 * indiceSFT * point_indice
-        + enfantsSupp * (sft_fixe["4"] + sft_prop["4"] / 100 * indiceSFT * point_indice);
-    }
-
     $("#sft").text(sft.toFixed(2));
 
     var total_neg = rafp + cs + csg_deduc + csg_non_deduc + rpc + crds;
 
-    var total = total_pos - total_neg + rembt + sft;
+    var total = total_pos - total_neg + rembt;
 
     $("#total").text(total.toFixed(2));
 };
