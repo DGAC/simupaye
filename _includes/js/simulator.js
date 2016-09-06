@@ -54,7 +54,9 @@ var compute_income = function(){
         nbi = temp;
     }
 
-    var traitement_brut = (indice + nbi)*point_indice;
+    var traitement_brut = indice*point_indice;
+
+    var nbi = nbi*point_indice;
 
     //majoration géographique
     var maj = 1;
@@ -65,7 +67,7 @@ var compute_income = function(){
 
     //indemnité résidence
     var indem = 0;
-    var temp = parseInt($('#region option:selected').val()) / 100 * (traitement_brut);
+    var temp = parseInt($('#region option:selected').val()) / 100 * (traitement_brut + nbi);
     if(!isNaN(temp)) {
         indem = temp;
     }
@@ -132,9 +134,10 @@ var compute_income = function(){
     //indemnité spéciale
     var special = 178 / 100 * prime_tech.principal;
 
-    var total_pos = traitement_brut + rsiV + prime_activity + technicity + special + indem + pcs + sft;
+    var total_pos = traitement_brut + nbi + rsiV + prime_activity + technicity + special + indem + pcs + sft;
     
     $('#traitement_brut').text(traitement_brut.toFixed(2));
+    $('#nbi').text(nbi.toFixed(2));
     $('#rsi').text(rsiV.toFixed(2));
     $('#activity').text(prime_activity.toFixed(2));
     $("#tech").text(technicity.toFixed(2));
@@ -142,7 +145,7 @@ var compute_income = function(){
     $("#special").text(special.toFixed(2));
 
     //retenue pour pension civile
-    var rpc = traitement_brut *  rpc_rate / 100;
+    var rpc = (traitement_brut + nbi) *  rpc_rate / 100;
 
     //rafp
     var base_rafp = prime_activity + technicity + rsiV + special + pcs + indem;
@@ -163,12 +166,12 @@ var compute_income = function(){
     //crds
     var crds = total_pos * 98.25 /100 * 0.5 / 100;
 
-    $('#rafp').text(rafp.toFixed(2));
-    $("#csg_deduc").text(csg_deduc.toFixed(2));
-    $('#csg_non_deduc').text(csg_non_deduc.toFixed(2));
-    $("#rpc").text(rpc.toFixed(2));
-    $("#crds").text(crds.toFixed(2));
-    $('#cs').text(cs.toFixed(2));
+    $('#rafp').text("- "+rafp.toFixed(2));
+    $("#csg_deduc").text("- "+csg_deduc.toFixed(2));
+    $('#csg_non_deduc').text("- "+csg_non_deduc.toFixed(2));
+    $("#rpc").text("- "+rpc.toFixed(2));
+    $("#crds").text("- "+crds.toFixed(2));
+    $('#cs').text("- "+cs.toFixed(2));
 
     $("#sft").text(sft.toFixed(2));
 
