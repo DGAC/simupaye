@@ -14,9 +14,26 @@ var fonctions = {
 };
 
 var fonctions_rsi = {
+    "BEA": {
+        "Enquêteur": 2,
+        "Enquêteur senior": 3,
+        "Enquêteur expérimenté": 4,
+        "Chef de division":4,
+        "Chef de département": 5,
+        "Enquêteur expérimenté sénior": 5,
+        "Adjoint au directeur": 6,
+        "Secrétaire général": 6,
+        "Directeur d'enquête": 6
+    },
     "DTA": {
         "Chargé d'études": 1,
-        "Chargé d'affaires": 2
+        "Chargé d'affaires": 2,
+        "Chef de programme": 3,
+        "Adjoint chef de bureau": 3,
+        "Chef de division": 4,
+        "Chef de pôle Ciel Unique": 5,
+        "Adjoint au sous-directeur": 6,
+        "Adjoint au chef de mission": 6
     },
     "DSNA": {
         "Adjoint chef CA (D ou E)": 1,
@@ -37,7 +54,8 @@ var fonctions_rsi = {
     },
     "DTI": {
         "Expert": 1,
-        "Expert confirmé": 2
+        "Expert confirmé": 2,
+        "Adjoint chef de pôle":3
     },
     "DSAC": {
         "Assistant de subdivision": 1,
