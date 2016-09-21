@@ -59,7 +59,7 @@ var fonctions = {
         "chargé de corps des IEEAC": 15,
         "Chef de mission": 15,
         "Directeur de cabinet": 15
-    }
+    },
     "DSNA/EC": {
         "Assistant de subdivision": 10,
         "Chargé d'études": 10,
@@ -206,7 +206,7 @@ var fonctions = {
         "Adjoint au chef du SNA/SSE": 14,
         "Adjoint au chef du SNA/OI": 14,
         "Chef du SNA (PF, NC)": 15,
-        "Chef de subdivision (B ou C) : 11,
+        "Chef de subdivision (B ou C)" : 11,
         "Chef de division (B ou C)": 12,
         "Chef d'organisme B ou C": 13,
         "Adjoint au chef d'organisme (D ou E)": 11,
@@ -490,7 +490,7 @@ var fonctions_rsi = {
         "Adjoint au chef du SNA/SE": 5,
         "Adjoint au chef du SNA/SSE": 5,
         "Chef du SNA (sauf OI, PF, NC)": 6,
-        "Chef de subdivision (B ou C) : 2,
+        "Chef de subdivision (B ou C)" : 2,
         "Chef de division (B ou C)": 3,
         "Chef d'organisme B ou C": 5,
        "Adjoint au chef CA (D ou E)": 1,
@@ -512,7 +512,7 @@ var fonctions_rsi = {
         "Chef de programme": 3,
         "Adjoint au chef de pôle": 4,
         "Adjoint au chef MEAS": 4,
-        "Chef de département (GSAC)": 5
+        "Chef de département (GSAC)": 5,
         "Chef d'équipe internationale principale de certification": 5,
         "Chef de pôle": 5,
         "Responsable qualité PPO": 5,
@@ -574,7 +574,7 @@ var fonctions_rsi = {
         "Directeur des études et de la recherche": 6,
         "Directeur de la formation au pilotage et des vols": 6,
         "Directeur de l'international et du développement": 6
-    }
+    },
     "CEDRe/SSIM": {
         "Chef de subdivision": 2,
         "Chef de projet": 2,
