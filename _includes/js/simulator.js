@@ -17,7 +17,179 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-var compute_income = function(){
+var compute_income_protocole = function(){
+    var activity_rate = activity_rate_2016;
+    var prime_tech = prime_tech_2016;
+    var rsi = rsi_2016;
+    var point_indice = point_indice_2016;
+
+    var echelon = parseInt($('#echelon option:selected').text());
+
+    //traitement brut
+    var indice = 0;
+    var emploi_fonctionnel = $("#emploi_fonctionnel option:selected");
+    if($("#emploi_fonctionnel:enabled").length > 0
+        && emploi_fonctionnel.val().localeCompare('non') !== 0
+        && emploi_fonctionnel.val() !== '') {
+        indice = parseInt($('#echelonbis option:selected').val());
+    } else {
+        indice = parseInt($('#echelon option:selected').val());
+    }
+
+    if(isNaN(indice)) {
+        indice = 0;
+    }
+
+    var nbi = 0;
+    var temp = parseInt($('#age option:selected').val());
+    if(!isNaN(temp)) {
+        nbi = temp;
+    }
+
+    var traitement_brut = indice*point_indice;
+
+    var nbi = nbi*point_indice;
+
+    //indemnité résidence
+    var indem = 0;
+    var temp = parseInt($('#region option:selected').val()) / 100 * (traitement_brut + nbi);
+    if(!isNaN(temp)) {
+        indem = temp;
+    }
+
+    $('#indem_res').text(indem.toFixed(2));
+
+    //remboursement dom-travail
+    var rembt = 0;
+    temp = parseFloat($('#rembt').val());
+    if(!isNaN(temp)) {
+        rembt = temp;
+    }
+
+    //pcs
+    var pcs = 0;
+    temp = parseFloat($('#pcs option:selected').val());
+    if(!isNaN(temp)) {
+        pcs = temp;
+    }
+
+    var maj = false;
+    temp = $('#affect option:selected').val();
+    if(temp.localeCompare("n-ne") == 0) {
+        maj = true;
+    }
+
+    //part fonction
+    var fonction = $("#fonction option:selected").val();
+    var part_fonction = 0;
+    if(typeof (fonction) != "undefined") {
+        var evsV = evs[fonction];
+        if(typeof (evsV) === undefined || isNaN(evsV)) {
+            evsV = 0;
+        }
+        part_fonction = evsV + pcs;
+    }
+
+    var majValue = 0;
+    if(maj) {
+        if(typeof (fonction) != "undefined") {
+            majValue += majFonction[fonction];
+        }
+        //part de la maj géo avec l'ancien calcul
+        //en attendant les chiffres officiels
+        var indiceActivity = Math.min(696, indice);
+        majValue += 0.05 * point_indice * indiceActivity * activity_rate / 100;
+    }
+
+    //part expé
+    var grade = $("#grade option:selected").val();
+    var part_xp = 0;
+    if(grade.localeCompare('normal') == 0){
+        part_xp = xp["4"];
+    } else {
+        part_xp = xp["5"];
+    }
+
+    //part qualif
+    var part_qualif = 0;
+    if(typeof (grade) != "undefined" && !isNaN(echelon)) {
+        part_qualif = qualif[grade][echelon];
+    }
+
+    //supplément familial
+    var indiceSFT = Math.min(Math.max(indice, 449), 716);
+    var nombreEnfants = 0;
+    var enfants = parseInt($("#famille").val());
+    if(!isNaN(enfants)) {
+        nombreEnfants = enfants;
+    }
+    //nombre d'enfants sup à 3
+    var enfantsSupp = Math.max(0, nombreEnfants - 3);
+    //nombre d'enfants <= 3
+    var enfantsMoins = Math.min(nombreEnfants, 3);
+    var sft = 0;
+    if(nombreEnfants > 0) {
+        sft = sft_fixe[enfantsMoins] + sft_prop[enfantsMoins] / 100 * indiceSFT * point_indice
+            + enfantsSupp * (sft_fixe["4"] + sft_prop["4"] / 100 * indiceSFT * point_indice);
+    }
+
+    $("#sft").text(sft.toFixed(2));
+
+    var total_pos = traitement_brut +nbi + part_fonction + part_qualif + part_xp + indem + sft + majValue;
+
+    //retenue pour pension civile
+    var rpc = traitement_brut *  rpc_rate / 100;
+
+    //rafp
+    var base_rafp = part_fonction + part_qualif + part_xp + indem;
+    var rafp = 0;
+    if(base_rafp < indice * point_indice * 20 / 100) {
+        rafp = 5 / 100 * base_rafp;
+    } else {
+        rafp = 5 / 100 * 20 / 100 * indice * point_indice;
+    }
+
+    //csg
+    var csg_deduc = 98.25 / 100 * 5.1 / 100 * total_pos;
+    var csg_non_deduc = 98.25 / 100 * 2.4 / 100 * total_pos;
+
+    //contrib solidarité
+    var cs = (total_pos - rpc - rafp) * 1 / 100;
+
+    //crds
+    var crds = total_pos * 98.25 /100 * 0.5 / 100;
+
+    var total_neg = rafp + cs + csg_deduc + csg_non_deduc + rpc + crds;
+
+    var total = total_pos - total_neg + rembt;
+
+    var totalBefore = compute_income_before(false);
+
+    var gain = total - totalBefore;
+
+    $('#traitement_brut').text(traitement_brut.toFixed(2));
+    $('#nbi').text(nbi.toFixed(2));
+    $('#part_fonction').text(part_fonction.toFixed(2));
+    $('#part_xp').text(part_xp.toFixed(2));
+    $("#part_qualif").text(part_qualif.toFixed(2));
+    $("#maj").text(majValue.toFixed(2));
+    $('#rafp').text("- "+rafp.toFixed(2));
+    $("#csg_deduc").text("- "+csg_deduc.toFixed(2));
+    $('#csg_non_deduc').text("- "+csg_non_deduc.toFixed(2));
+    $("#rpc").text("- "+rpc.toFixed(2));
+    $("#crds").text("- "+crds.toFixed(2));
+    $('#cs').text("- "+cs.toFixed(2));
+    $("#total").text(total.toFixed(2));
+    $("#gain").text(gain.toFixed(2));
+
+    return total;
+};
+
+var compute_income_before = function(populate){
+
+    if(typeof populate == 'undefined') {
+        populate = true;
+    }
 
     var activity_rate = activity_rate_2015;
     var prime_tech = prime_tech_2015;
@@ -72,8 +244,6 @@ var compute_income = function(){
         indem = temp;
     }
 
-    $('#indem_res').text(indem.toFixed(2));
-
     //remboursement dom-travail
     var rembt = 0;
     temp = parseFloat($('#rembt').val());
@@ -90,6 +260,13 @@ var compute_income = function(){
 
     //rsi
     var fonction = $("#fonction option:selected").val();
+    if(document.location.pathname.indexOf('protocole') > 0) {
+        var selectedService = $("#service option:selected").text();
+        var selectedFonction = $("#fonction option:selected").text();
+        if(selectedFonction.length > 0 && selectedService.length > 0) {
+            fonction = fonctions_rsi[selectedService][selectedFonction];
+        }
+    }
     var rsiV = 0;
     if(typeof (fonction) != "undefined") {
         var rsiT = rsi[fonction];
@@ -136,13 +313,7 @@ var compute_income = function(){
 
     var total_pos = traitement_brut + nbi + rsiV + prime_activity + technicity + special + indem + pcs + sft;
     
-    $('#traitement_brut').text(traitement_brut.toFixed(2));
-    $('#nbi').text(nbi.toFixed(2));
-    $('#rsi').text(rsiV.toFixed(2));
-    $('#activity').text(prime_activity.toFixed(2));
-    $("#tech").text(technicity.toFixed(2));
-    $("#pcsV").text(pcs.toFixed(2));
-    $("#special").text(special.toFixed(2));
+
 
     //retenue pour pension civile
     var rpc = (traitement_brut + nbi) *  rpc_rate / 100;
@@ -165,22 +336,40 @@ var compute_income = function(){
 
     //crds
     var crds = total_pos * 98.25 /100 * 0.5 / 100;
-
-    $('#rafp').text("- "+rafp.toFixed(2));
-    $("#csg_deduc").text("- "+csg_deduc.toFixed(2));
-    $('#csg_non_deduc').text("- "+csg_non_deduc.toFixed(2));
-    $("#rpc").text("- "+rpc.toFixed(2));
-    $("#crds").text("- "+crds.toFixed(2));
-    $('#cs').text("- "+cs.toFixed(2));
-
-    $("#sft").text(sft.toFixed(2));
-
     var total_neg = rafp + cs + csg_deduc + csg_non_deduc + rpc + crds;
 
     var total = total_pos - total_neg + rembt;
 
-    $("#total").text(total.toFixed(2));
+    if(populate) {
+        $('#traitement_brut').text(traitement_brut.toFixed(2));
+        $('#nbi').text(nbi.toFixed(2));
+        $('#rsi').text(rsiV.toFixed(2));
+        $('#activity').text(prime_activity.toFixed(2));
+        $("#tech").text(technicity.toFixed(2));
+        $("#pcsV").text(pcs.toFixed(2));
+        $("#special").text(special.toFixed(2));
+        $('#indem_res').text(indem.toFixed(2));
+        $('#rafp').text("- " + rafp.toFixed(2));
+        $("#csg_deduc").text("- " + csg_deduc.toFixed(2));
+        $('#csg_non_deduc').text("- " + csg_non_deduc.toFixed(2));
+        $("#rpc").text("- " + rpc.toFixed(2));
+        $("#crds").text("- " + crds.toFixed(2));
+        $('#cs').text("- " + cs.toFixed(2));
+        $("#sft").text(sft.toFixed(2));
+        $("#total").text(total.toFixed(2));
+    }
+
+    return total;
 };
+
+var compute_income = function() {
+    var url = document.location.pathname;
+    if(url.indexOf('protocole') > 0) {
+        compute_income_protocole();
+    } else {
+        compute_income_before();
+    }
+}
 
 var initForm = function () {
     var grade = $('#grade');
@@ -194,7 +383,7 @@ var initForm = function () {
     service.attr('disabled', false);
     service.empty();
     service.append($('<option disabled selected value> -- Sélectionner un service -- </option>'));
-    for(var prop in fonctions_rsi) {
+    for(var prop in _fonctions) {
         service.append($('<option>' + prop + "</option>"));
     }
 
@@ -276,6 +465,8 @@ var remplir_echelon_fonctionnels = function () {
 
 var year = "2015";
 
+var _fonctions = document.location.pathname.indexOf('protocole') > 0 ? fonctions : fonctions_rsi;
+
 $(document).ready(function(){
 
     initForm();
@@ -328,8 +519,8 @@ $(document).ready(function(){
         fonction.empty();
         fonction.append($('<option disabled selected value> -- Sélectionner une fonction -- </option>'));
         var val = $(this).val();
-        for(var prop in fonctions_rsi[val]) {
-            fonction.append($('<option value="'+fonctions_rsi[val][prop]+'">'+prop+'</option>'));
+        for(var prop in _fonctions[val]) {
+            fonction.append($('<option value="'+_fonctions[val][prop]+'">'+prop+'</option>'));
         }
         compute_income();
     });
@@ -357,4 +548,6 @@ $(document).ready(function(){
     $('#rembt').on('change', function(e){
         compute_income();
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
 });

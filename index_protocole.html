@@ -6,7 +6,7 @@ js:
 - js/datas/grilles.js
 - js/datas/services.js
 - js/datas/const.js
-- js/simulator_protocole.js
+- js/simulator.js
 ---
 
 <div class="alert alert-warning">
@@ -59,13 +59,23 @@ Version valable à partir du protocole 2016-2019<br>
           </div>
       </div>
       <div class="form-group">
-          <label for="fonction" class="col-sm-3 control-label">Fonction</label>
+          <label for="fonction" class="col-sm-3 control-label">Fonction<sup data-toggle="tooltip" title="Votre poste est absent ? Contactez-nous !">?</sup></label>
           <div class="col-sm-9">
               <select class="form-control" id="fonction" disabled></select>
           </div>
       </div>
       <div class="form-group">
-          <label for="region" class="col-sm-3 control-label">Région</label>
+          <label for="affect" class="col-sm-3 control-label">Site d'affectation</label>
+          <div class="col-sm-9">
+              <select class="form-control" id="affect">
+                  <option disabled selected value> -- Sélectionner votre site d'affectation -- </option>
+                  <option value="n-ne">Nord/Nord-Est</option>
+                  <option value="other">Autre</option>
+              </select>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="region" class="col-sm-3 control-label">Zone de résidence<sup><a data-toggle="tooltip" title="Comment déterminer mon barême ?" data-placement="top" href="http://www.fonction-publique.gouv.fr/indemnites-de-residence-et-supplement-familial-de-traitement" target="_blank">?</a></sup></label>
           <div class="col-sm-9">
               <select class="form-control" id="region">
               </select>
@@ -99,6 +109,14 @@ Version valable à partir du protocole 2016-2019<br>
             <tr class="active">
                 <td>Traitement brut</td>
                 <td id="traitement_brut"></td>
+            </tr>
+            <tr class="active">
+                <td>NBI</td>
+                <td id="nbi"></td>
+            </tr>
+            <tr class="active">
+                <td data-toggle="tooltip" data-title="Valeur donnée à titre indicatif">Majoration géographique*</td>
+                <td id="maj"></td>
             </tr>
             <tr class="active">
                 <td>Indemnité de résidence</td>
@@ -147,6 +165,10 @@ Version valable à partir du protocole 2016-2019<br>
             <tr class="success">
                 <td>Total</td>
                 <td id="total"></td>
+            </tr>
+            <tr class="success">
+                <td>Gain protocole</td>
+                <td id="gain"></td>
             </tr>
         </table>
     </div>
