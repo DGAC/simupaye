@@ -21,7 +21,7 @@ var compute_income_protocole = function(){
     var activity_rate = activity_rate_2016;
     var prime_tech = prime_tech_2016;
     var rsi = rsi_2016;
-    var point_indice = point_indice_2016;
+    var point_indice = point_indice_2017;
 
     var echelon = parseInt($('#echelon option:selected').text());
 
@@ -196,11 +196,18 @@ var compute_income_before = function(populate){
     var rsi = rsi_2015;
     var point_indice = point_indice_2015;
 
-    if(year.localeCompare("2016") == 0) {
+    if(year == 2016) {
         activity_rate = activity_rate_2016;
         prime_tech = prime_tech_2016;
         rsi = rsi_2016;
         point_indice = point_indice_2016;
+    }
+
+    if(year == 2017) {
+        activity_rate = activity_rate_2016;
+        prime_tech = prime_tech_2016;
+        rsi = rsi_2016;
+        point_indice = point_indice_2017;
     }
 
     var echelon = parseInt($('#echelon option:selected').text());
@@ -369,7 +376,7 @@ var compute_income = function() {
     } else {
         compute_income_before();
     }
-}
+};
 
 var initForm = function () {
     var grade = $('#grade');
@@ -402,10 +409,22 @@ var initForm = function () {
     $('#region').append($('<option value="1">1%</option>'));
     $('#region').append($('<option value="3">3%</option>'));
 
-    $('#pcs').append($('<option disabled selected value> -- Sélectionner un barême -- </option>'));
-    $('#pcs').append($('<option value="0">0 €</option>'));
-    $('#pcs').append($('<option value="102.40">102,40 €</option>'));
-    $('#pcs').append($('<option value="153.60">153,60 €</option>'));
+    initPCS();
+};
+
+var initPCS = function() {
+  var pcs = pcs_2015;
+  if(year == 2016) {
+      pcs = pcs_2016;
+  } else if (year == 2017) {
+      pcs = pcs_2017;
+  }
+  var pcs150 = pcs*1.5;
+  $('#pcs').empty();
+  $('#pcs').append($('<option disabled selected value> -- Sélectionner un barême -- </option>'));
+  $('#pcs').append($('<option value="0">0 €</option>'));
+  $('#pcs').append($('<option value="'+pcs+'">'+pcs+' €</option>'));
+  $('#pcs').append($('<option value="'+pcs150+'">'+pcs150.toFixed(2)+' €</option>'));
 };
 
 var remplir_echelon_normaux = function() {
@@ -463,7 +482,7 @@ var remplir_echelon_fonctionnels = function () {
     }
 };
 
-var year = "2015";
+var year = 2017;
 
 var _fonctions = document.location.pathname.indexOf('protocole') > 0 ? fonctions : fonctions_rsi;
 
@@ -471,11 +490,13 @@ $(document).ready(function(){
 
     initForm();
 
-    year = getUrlParameter("year");
-    if(typeof (year) == "undefined") {
-        year = "2016";
-    }
-    $("#year").text(year);
+    $('.validity a').on('click', function(e){
+        $('.validity').removeClass('active');
+        $(this).parent().addClass('active');
+        year = $(this).data('year');
+        initPCS();
+        compute_income();
+    });
 
     $('#grade').on('change', function(e){
 

@@ -9,168 +9,188 @@ js:
 - js/simulator.js
 ---
 
-<div class="alert alert-warning">
-Version valable à partir du protocole 2016-2019<br>
+<div class="alert alert-danger">
+    Version valable à partir du protocole 2016-2019<br>
     Toutes les données ne sont pas encore disponibles.
 </div>
 
-<div class="row">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="page-header">
+                <h2>1. Corps</h2>
+            </div>
+            <ul class="nav nav-pills nav-justified" style="margin-left: 0px">
+                <li class="active" id="corps-ieeac"><a href="#">IEEAC</a></li>
+                <li class="disabled" id="corps-icna"><a href="#">ICNA</a></li>
+                <li class="disabled" id="corps-tseeac"><a href="#">TSEEAC</a></li>
+                <li class="disabled" id="corps-iessa"><a href="#">IESSA</a></li>
+            </ul>
+        </div>
 
-<div class="col-md-5 col-md-offset-1">
-  <form class="form-horizontal" id="conditions">
-      <div class="form-group">
-          <label for="grade" class="col-sm-3 control-label">Grade</label>
-          <div class="col-sm-9">
-              <select class="form-control" id="grade"></select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="echelon" class="col-sm-3 control-label">Échelon</label>
-          <div class="col-sm-9">
-              <select class="form-control" id="echelon" disabled></select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="emploi_fonctionnel" class="col-sm-3 control-label">Emploi fonctionnel</label>
-          <div class="col-sm-9">
-              <select class="form-control" id="emploi_fonctionnel" disabled></select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="echelonbis" class="col-sm-3 control-label">Échelon emploi fonctionnel</label>
-          <div class="col-sm-9">
-              <select class="form-control" id="echelonbis" disabled></select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="age" class="col-sm-3 control-label">Âge</label>
-          <div class="col-sm-9">
-              <select class="form-control" id="age">
-                  <option disabled selected value> -- Sélectionner l'âge -- </option>
-                  <option value="0">Infèrieur à 35 ans</option>
-                  <option value="75">Supèrieur ou égal à 35 ans</option>
-              </select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="service" class="col-sm-3 control-label">Service</label>
-          <div class="col-sm-9">
-              <select class="form-control" id="service"></select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="fonction" class="col-sm-3 control-label">Fonction<sup data-toggle="tooltip" title="Votre poste est absent ? Contactez-nous !">?</sup></label>
-          <div class="col-sm-9">
-              <select class="form-control" id="fonction" disabled></select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="affect" class="col-sm-3 control-label">Site d'affectation</label>
-          <div class="col-sm-9">
-              <select class="form-control" id="affect">
-                  <option disabled selected value> -- Sélectionner votre site d'affectation -- </option>
-                  <option value="n-ne">Nord/Nord-Est</option>
-                  <option value="other">Autre</option>
-              </select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="region" class="col-sm-3 control-label">Zone de résidence<sup><a data-toggle="tooltip" title="Comment déterminer mon barême ?" data-placement="top" href="http://www.fonction-publique.gouv.fr/indemnites-de-residence-et-supplement-familial-de-traitement" target="_blank">?</a></sup></label>
-          <div class="col-sm-9">
-              <select class="form-control" id="region">
-              </select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="famille" class="col-sm-3 control-label">Nombre d'enfants</label>
-          <div class="col-sm-9">
-              <input type="number" class="form-control" id="famille">
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="pcs" class="col-sm-3 control-label">Prime contrainte de service</label>
-          <div class="col-sm-9">
-              <select class="form-control" id="pcs">
-              </select>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="rembt" class="col-sm-3 control-label">Remboursement dom-travail</label>
-          <div class="col-sm-9">
-              <input type="text" class="form-control" id="rembt">
-          </div>
-      </div>
-  </form>
-</div>
-<div class="col-md-5">
-    <h2>Résultat</h2>
-    <div class="result">
-        <table class="table">
-            <tr class="active">
-                <td>Traitement brut</td>
-                <td id="traitement_brut"></td>
-            </tr>
-            <tr class="active">
-                <td>NBI</td>
-                <td id="nbi"></td>
-            </tr>
-            <tr class="active">
-                <td data-toggle="tooltip" data-title="Valeur donnée à titre indicatif">Majoration géographique*</td>
-                <td id="maj"></td>
-            </tr>
-            <tr class="active">
-                <td>Indemnité de résidence</td>
-                <td id="indem_res"></td>
-            </tr>
-            <tr class="active">
-                <td>Part fonction</td>
-                <td id="part_fonction"></td>
-            </tr>
-            <tr class="active">
-                <td>Part expérience</td>
-                <td id="part_xp"></td>
-            </tr>
-            <tr class="active">
-                <td>Part qualification</td>
-                <td id="part_qualif"></td>
-            </tr>
-            <tr class="active">
-                <td>Supplément familial</td>
-                <td id="sft"></td>
-            </tr>
-            <tr>
-                <td>CSG déductible</td>
-                <td id="csg_deduc"></td>
-            </tr>
-            <tr>
-                <td>CSG non déductible</td>
-                <td id="csg_non_deduc"></td>
-            </tr>
-            <tr>
-                <td>RPC</td>
-                <td id="rpc"></td>
-            </tr>
-            <tr>
-                <td>RAFP</td>
-                <td id="rafp"></td>
-            </tr>
-            <tr>
-                <td>Contribution solidarité</td>
-                <td id="cs"></td>
-            </tr>
-            <tr>
-                <td>CRDS</td>
-                <td id="crds"></td>
-            </tr>
-            <tr class="success">
-                <td>Total</td>
-                <td id="total"></td>
-            </tr>
-            <tr class="success">
-                <td>Gain protocole</td>
-                <td id="gain"></td>
-            </tr>
-        </table>
     </div>
-</div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="page-header"><h2>2. Paramètres</h2></div>
+            <form class="form-horizontal" id="conditions">
+                <div class="form-group">
+                    <label for="grade" class="col-sm-3 control-label">Grade</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="grade"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="echelon" class="col-sm-3 control-label">Échelon</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="echelon" disabled></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="emploi_fonctionnel" class="col-sm-3 control-label">Emploi fonctionnel</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="emploi_fonctionnel" disabled></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="echelonbis" class="col-sm-3 control-label">Échelon emploi fonctionnel</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="echelonbis" disabled></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="age" class="col-sm-3 control-label">Âge</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="age">
+                            <option disabled selected value> -- Sélectionner l'âge -- </option>
+                            <option value="0">Infèrieur à 35 ans</option>
+                            <option value="75">Supèrieur ou égal à 35 ans</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="service" class="col-sm-3 control-label">Service</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="service"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fonction" class="col-sm-3 control-label">Fonction<sup data-toggle="tooltip" title="Votre poste est absent ? Contactez-nous !">?</sup></label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="fonction" disabled></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="affect" class="col-sm-3 control-label">Site d'affectation</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="affect">
+                            <option disabled selected value> -- Sélectionner votre site d'affectation -- </option>
+                            <option value="n-ne">Nord/Nord-Est</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="region" class="col-sm-3 control-label">Zone de résidence<sup><a data-toggle="tooltip" title="Comment déterminer mon barême ?" data-placement="top" href="http://www.fonction-publique.gouv.fr/indemnites-de-residence-et-supplement-familial-de-traitement" target="_blank">?</a></sup></label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="region">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="famille" class="col-sm-3 control-label">Nombre d'enfants</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="famille">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pcs" class="col-sm-3 control-label">Prime contrainte de service</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="pcs">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rembt" class="col-sm-3 control-label">Remboursement dom-travail</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="rembt">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-5">
+            <div class="page-header">
+                <h2>Résultat</h2>
+            </div>
+            <div class="result">
+                <table class="table">
+                    <tr class="active">
+                        <td>Traitement brut</td>
+                        <td id="traitement_brut"></td>
+                    </tr>
+                    <tr class="active">
+                        <td>NBI</td>
+                        <td id="nbi"></td>
+                    </tr>
+                    <tr class="active">
+                        <td data-toggle="tooltip" data-placement="top" data-container="body" data-title="Valeur donnée à titre indicatif">Majoration géographique*</td>
+                        <td id="maj"></td>
+                    </tr>
+                    <tr class="active">
+                        <td>Indemnité de résidence</td>
+                        <td id="indem_res"></td>
+                    </tr>
+                    <tr class="active">
+                        <td>Part fonction</td>
+                        <td id="part_fonction"></td>
+                    </tr>
+                    <tr class="active">
+                        <td>Part expérience</td>
+                        <td id="part_xp"></td>
+                    </tr>
+                    <tr class="active">
+                        <td>Part qualification</td>
+                        <td id="part_qualif"></td>
+                    </tr>
+                    <tr class="active">
+                        <td>Supplément familial</td>
+                        <td id="sft"></td>
+                    </tr>
+                    <tr>
+                        <td>CSG déductible</td>
+                        <td id="csg_deduc"></td>
+                    </tr>
+                    <tr>
+                        <td>CSG non déductible</td>
+                        <td id="csg_non_deduc"></td>
+                    </tr>
+                    <tr>
+                        <td>RPC</td>
+                        <td id="rpc"></td>
+                    </tr>
+                    <tr>
+                        <td>RAFP</td>
+                        <td id="rafp"></td>
+                    </tr>
+                    <tr>
+                        <td>Contribution solidarité</td>
+                        <td id="cs"></td>
+                    </tr>
+                    <tr>
+                        <td>CRDS</td>
+                        <td id="crds"></td>
+                    </tr>
+                    <tr class="success">
+                        <td>Total</td>
+                        <td id="total"></td>
+                    </tr>
+                    <tr class="success">
+                        <td>Gain protocole</td>
+                        <td id="gain"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

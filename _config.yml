@@ -17,3 +17,6 @@ github_username:  BrunoSpy
 
 # Build settings
 markdown: kramdown
+
+sass:
+  style: :compressed
