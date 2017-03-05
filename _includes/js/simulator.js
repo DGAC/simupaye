@@ -380,8 +380,9 @@ var compute_income = function() {
 
 var initForm = function () {
     var grade = $('#grade');
+    grade.empty();
     grade.append($('<option disabled selected value> -- Sélectionner un grade -- </option>'));
-    $.each(grades, function(index, value){
+    $.each(grades[corps], function(index, value){
         var option = $('<option>' + value + '</option>');
         grade.append(option);
     });
@@ -395,6 +396,7 @@ var initForm = function () {
     }
 
     var emploi = $("#emploi_fonctionnel");
+    emploi.empty();
     emploi.append($('<option disabled selected value> -- Sélectionner un emploi fonctionnel -- </option>'));
     $.each(emplois_fonctionnel, function(index, value){
         var option = $("<option>" + value + "</option>");
@@ -404,6 +406,7 @@ var initForm = function () {
     $("#emploi_fonctionnel").closest('.form-group').hide();
     $("#echelonbis").closest('.form-group').hide();
 
+    $("#region").empty();
     $('#region').append($('<option disabled selected value> -- Sélectionner un barême -- </option>'));
     $('#region').append($('<option value="0">0%</option>'));
     $('#region').append($('<option value="1">1%</option>'));
@@ -433,16 +436,16 @@ var remplir_echelon_normaux = function() {
     //échelons normaux
     switch ($('#grade').val()) {
         case 'élève':
-            grille = echelons.élève;
+            grille = echelons[corps][year].élève;
             break;
         case 'normal':
-            grille = echelons.normal;
+            grille = echelons[corps][year].normal;
             break;
         case 'principal':
-            grille = echelons.principal;
+            grille = echelons[corps][year].principal;
             break;
         case 'hors classe':
-            grille = echelons.hors_classe;
+            grille = echelons[corps][year].hors_classe;
             break;
     }
     var echelon = $("#echelon");
@@ -482,19 +485,76 @@ var remplir_echelon_fonctionnels = function () {
     }
 };
 
+//variables par défaut
 var year = 2017;
-
-var _fonctions = document.location.pathname.indexOf('protocole') > 0 ? fonctions : fonctions_rsi;
+var corps = 'ieeac';
+var protocole = document.location.pathname.indexOf('protocole') > 0
+var _fonctions = protocole ? fonctions : fonctions_rsi;
+var proto = moment('2017-07-01');
 
 $(document).ready(function(){
 
     initForm();
+    $("#validity").append($('<option disabled selected value> -- Sélectionner une date -- </option>'));
+    for(var d in date) {
+        var dateM = moment(date[d], 'DD/MM/YYYY');
+        $("#validity").append($('<option value="'+date[d]+'" class="'+(dateM < proto ? 'beforeprotocole' : 'protocole')+'">'+date[d]+'</option>'));
+    }
 
-    $('.validity a').on('click', function(e){
-        $('.validity').removeClass('active');
+    $('#validity').on('change', function(e) {
+       var date = moment($(this).find(':selected').text(), 'DD/MM/YYYY');
+
+       if(date < proto){
+           //avant protocole
+           //seul ieeac possible
+           if(corps.localeCompare('ieeac') == 0) {
+               $(".result .ieeac").show();
+               $(".result .ris").hide();
+               $("#corps-icna").addClass('disabled');
+               $("#corps-iessa").addClass('disabled');
+               $("#corps-tseeac").addClass('disabled');
+           }
+       } else {
+           //après protocole
+           $(".result .ieeac").hide();
+           $(".result .ris").show();
+           $("#corps-icna").removeClass('disabled');
+           $("#corps-iessa").removeClass('disabled');
+           $("#corps-tseeac").removeClass('disabled');
+       }
+    });
+
+    $('li.corps a').on('click', function(e){
+        var c = $(this).closest('li').data('corps');
+        if(c.localeCompare('ieeac') != 0) {
+            $("#validity option.beforeprotocole").attr('disabled', 'disabled');
+        } else {
+            $("#validity option.beforeprotocole").removeAttr('disabled');
+        }
+    });
+
+    //init modal evs
+    var options = {
+        valueNames: ['name', 'evs'],
+        item: '<tr><td class="name"></td><td class="evs"></td><td><button data-dismiss="modal" class="use-evs btn btn-default btn-sm">Utiliser</button></td></tr>'
+    };
+    var evsList = new List('evs_table', options, fonctions_evs);
+    evsList.sort('evs', {order: 'asc'});
+    $("#search-fonction").on('keyup', function () {
+        var searchString = $(this).val();
+        evsList.fuzzySearch(searchString);
+    });
+
+    $(".use-evs").on('click', function (e) {
+        var value = $(this).closest('tr').find('.evs').text();
+        $("#evs").val(parseInt(value)).trigger('change');
+    });
+
+    $('.corps a').on('click', function(e){
+        $('.corps').removeClass('active');
         $(this).parent().addClass('active');
-        year = $(this).data('year');
-        initPCS();
+        corps = $(this).parent().data('corps');
+        initForm();
         compute_income();
     });
 
@@ -543,6 +603,10 @@ $(document).ready(function(){
         for(var prop in _fonctions[val]) {
             fonction.append($('<option value="'+_fonctions[val][prop]+'">'+prop+'</option>'));
         }
+        compute_income();
+    });
+
+    $("#evs").on('change keyup', function(e){
         compute_income();
     });
 
