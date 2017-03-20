@@ -33,3 +33,12 @@ var grades = {
         "détaché"
     ]
 };
+
+var detachements = [
+    "RTAC",
+    "CTAC",
+    "CSTAC",
+    "CUTAC",
+    "CST",
+    "CSTP"
+];

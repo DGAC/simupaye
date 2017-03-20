@@ -2,24 +2,10 @@
  * Created by Bruno Spyckerelle on 03/07/16.
  */
 
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
-};
-
 var compute_income_protocole = function(){
     var activity_rate = activity_rate_2016;
     var prime_tech = prime_tech_2016;
+
     var rsi = rsi_2016;
     var point_indice = point_indice_2017;
 
@@ -295,7 +281,7 @@ var compute_income_before = function(populate){
             technicity = prime_tech.normal;
         } else if (grade.localeCompare("principal") == 0 || (grade.localeCompare("hors classe") == 0)) {
             technicity = prime_tech.principal;
-        } 
+        }
     }
 
     //supplément familial
@@ -319,7 +305,7 @@ var compute_income_before = function(populate){
     var special = 178 / 100 * prime_tech.principal;
 
     var total_pos = traitement_brut + nbi + rsiV + prime_activity + technicity + special + indem + pcs + sft;
-    
+
 
 
     //retenue pour pension civile
@@ -369,15 +355,6 @@ var compute_income_before = function(populate){
     return total;
 };
 
-var compute_income = function() {
-    var url = document.location.pathname;
-    if(url.indexOf('protocole') > 0) {
-        compute_income_protocole();
-    } else {
-        compute_income_before();
-    }
-};
-
 var initForm = function () {
     var grade = $('#grade');
     grade.empty();
@@ -387,24 +364,16 @@ var initForm = function () {
         grade.append(option);
     });
 
-    var service = $("#service");
-    service.attr('disabled', false);
-    service.empty();
-    service.append($('<option disabled selected value> -- Sélectionner un service -- </option>'));
-    for(var prop in _fonctions) {
-        service.append($('<option>' + prop + "</option>"));
-    }
-
-    var emploi = $("#emploi_fonctionnel");
-    emploi.empty();
-    emploi.append($('<option disabled selected value> -- Sélectionner un emploi fonctionnel -- </option>'));
-    $.each(emplois_fonctionnel, function(index, value){
-        var option = $("<option>" + value + "</option>");
-        emploi.append(option);
+    var detachement = $("#detachement");
+    detachement.empty().closest('.form-group').hide();
+    detachement.append($('<option disabled selected value> -- Sélectionner une grille -- </option>'));
+    $.each(detachements, function(index, value){
+        var option = $('<option>' + value + '</option>');
+        detachement.append(option);
     });
 
-    $("#emploi_fonctionnel").closest('.form-group').hide();
-    $("#echelonbis").closest('.form-group').hide();
+    //reset echelons
+    $("#echelons").empty();
 
     $("#region").empty();
     $('#region').append($('<option disabled selected value> -- Sélectionner un barême -- </option>'));
@@ -412,85 +381,297 @@ var initForm = function () {
     $('#region').append($('<option value="1">1%</option>'));
     $('#region').append($('<option value="3">3%</option>'));
 
-    initPCS();
+    var pcs150 = _pcs*1.5;
+    $('#pcs').empty();
+    $('#pcs').append($('<option disabled selected value> -- Sélectionner un barême -- </option>'));
+    $('#pcs').append($('<option value="0">0 €</option>'));
+    $('#pcs').append($('<option value="pcs">'+_pcs+' €</option>'));
+    $('#pcs').append($('<option value="pcs150">'+pcs150.toFixed(2)+' €</option>'));
+
 };
 
-var initPCS = function() {
-  var pcs = pcs_2015;
-  if(year == 2016) {
-      pcs = pcs_2016;
-  } else if (year == 2017) {
-      pcs = pcs_2017;
-  }
-  var pcs150 = pcs*1.5;
-  $('#pcs').empty();
-  $('#pcs').append($('<option disabled selected value> -- Sélectionner un barême -- </option>'));
-  $('#pcs').append($('<option value="0">0 €</option>'));
-  $('#pcs').append($('<option value="'+pcs+'">'+pcs+' €</option>'));
-  $('#pcs').append($('<option value="'+pcs150+'">'+pcs150.toFixed(2)+' €</option>'));
-};
+var compute_income = function() {
 
-var remplir_echelon_normaux = function() {
-    var grille = [];
+    //assiette de la crds, csg
+    var total_pos = 0;
 
-    //échelons normaux
-    switch ($('#grade').val()) {
-        case 'élève':
-            grille = echelons[corps][year].élève;
-            break;
-        case 'normal':
-            grille = echelons[corps][year].normal;
-            break;
-        case 'principal':
-            grille = echelons[corps][year].principal;
-            break;
-        case 'hors classe':
-            grille = echelons[corps][year].hors_classe;
-            break;
+    //calcul de l'indice
+    var indice = parseInt($("#echelon option:selected").val());
+    if(isNaN(indice)){
+        indice = 0;
     }
-    var echelon = $("#echelon");
-    echelon.empty();
-    echelon.attr('disabled', false);
-    echelon.append($('<option disabled selected value> -- Sélectionner un échelon -- </option>'));
-    for (var prop in grille) {
-        echelon.append($('<option value="' + grille[prop] + '">' + prop + '</option>'));
+
+    var traitement_brut = indice*_point_indice;
+    total_pos += traitement_brut;
+
+    var nbi = parseInt($('#age option:selected').val());
+    if(isNaN(nbi)) {
+        nbi = 0;
+    } else {
+        nbi = nbi * points_nbi[corps]*_point_indice;
     }
-};
+    total_pos += nbi;
 
-var remplir_echelon_fonctionnels = function () {
-    //échelons fonctionnels
-    var grillebis = [];
-    if($("#grade").val().localeCompare('principal') == 0) {
-        switch ($('#emploi_fonctionnel').val()) {
-            case 'non':
+    //indemnité résidence
+    var indem = 0;
+    var temp = parseInt($('#region option:selected').val()) / 100 * (traitement_brut + nbi);
+    if(!isNaN(temp)) {
+        indem = temp;
+    }
+    total_pos += indem;
 
-                break;
-            case "1015":
-                grillebis = echelons._1015;
-                break;
-            case "HEA":
-                grillebis = echelons.HEA;
-                break;
-            case "HEB":
-                grillebis = echelons.HEB;
-                break;
+    //majoration géographique
+    var maj = 1;
+    temp = $('#affect option:selected').val();
+    if(temp.localeCompare("n-ne") == 0) {
+        maj = 1.05;
+    }
+
+    //pcs
+    var pcsValue = 0;
+    var pcsOption = $("#pcs option:selected").val();
+    if(typeof pcsOption == "undefined") {
+        // pas de pcs ?
+    } else {
+        if(pcsOption.localeCompare("pcs") == 0) {
+            pcsValue = _pcs;
+        } else if(pcsOption.localeCompare("pcs150") == 0) {
+            pcsValue = _pcs * 1.5;
         }
     }
-    var echelonbis = $("#echelonbis");
-    echelonbis.empty();
-    echelonbis.attr('disabled', false);
-    echelonbis.append($('<option disabled selected value> -- Sélectionner un échelon fonctionnel -- </option>'));
-    for(var prop in grillebis){
-        echelonbis.append($('<option value="'+grillebis[prop]+'">'+prop+'</option>'));
+    total_pos += pcsValue;
+
+    //supplément familial
+    var indiceSFT = Math.min(Math.max((indice+nbi), 449), 716);
+    var nombreEnfants = 0;
+    var enfants = parseInt($("#famille").val());
+    if(!isNaN(enfants)) {
+        nombreEnfants = enfants;
     }
+    //nombre d'enfants sup à 3
+    var enfantsSupp = Math.max(0, nombreEnfants - 3);
+    //nombre d'enfants <= 3
+    var enfantsMoins = Math.min(nombreEnfants, 3);
+    var sft = 0;
+    if(nombreEnfants > 0) {
+        sft = sft_fixe[enfantsMoins]
+            + sft_prop[enfantsMoins] / 100 * indiceSFT * _point_indice
+            + enfantsSupp * (sft_fixe["4"] + sft_prop["4"] / 100 * indiceSFT * _point_indice);
+    }
+    total_pos += sft;
+
+
+    //calculs spécifiques avant ou après RIST
+    if(proto) {
+
+    } else {
+        //calcul uniquement disponible pour les ieeac
+        //rsi
+        var niveauRSI = parseInt($("#rsi").val());
+        var rsiValue = 0;
+        if(!isNaN(niveauRSI)){
+            rsiValue = _rsi[niveauRSI] * 696 * _point_indice * _activity_rate / 100 * maj;
+        }
+        total_pos += rsiValue;
+
+        //prime activité
+        var indiceActivity = Math.min(696, indice);
+        var primeActivity = _activity_rate / 100 * indiceActivity * _point_indice * maj;
+        total_pos += primeActivity;
+
+        //prime technicité
+        var technicity = 0;
+        var grade = $("#grade option:selected").val();
+        if(typeof grade != "undefined") {
+            if(grade.localeCompare("élève") == 0) {
+                //pas de prime
+            } else if(grade.localeCompare("normal") == 0) {
+                technicity = _prime_tech["normal"];
+            } else {
+                technicity = _prime_tech["principal"];
+            }
+        }
+        total_pos += technicity;
+
+        //indemnité spéciale
+        var special = 178 / 100 * _prime_tech.principal;
+        total_pos += special;
+    }
+
+    //remboursement dom-travail
+    var rembt = 0;
+    temp = parseFloat($('#rembt').val());
+    if(!isNaN(temp)) {
+        rembt = temp;
+    }
+
+    var retenues = 0;
+
+    //crds
+    var crds = total_pos * 98.25 /100 * 0.5 / 100;
+    retenues += crds;
+
+    //retenue pour pension civile
+    var rpc = (traitement_brut + nbi) * rpc_rate / 100;
+    retenues += rpc;
+
+    //rafp
+    var rafp = 0;
+    var base_rafp = total_pos - (traitement_brut + nbi + sft);
+    if(base_rafp < indice * _point_indice * 20 / 100) {
+        rafp = 5 / 100 * base_rafp;
+    } else {
+        rafp = 5 / 100 * 20 / 100 * indice * _point_indice;
+    }
+    retenues += rafp;
+
+    //contribution solidarité
+    var cs = (total_pos - rpc - rafp) * 1 / 100;
+    retenues += cs;
+
+    //csg
+    var csg_deduc = 98.25 / 100 * 5.1 / 100 * total_pos;
+    var csg_non_deduc = 98.25 / 100 * 2.4 / 100 * total_pos;
+    retenues += csg_deduc;
+    retenues += csg_non_deduc;
+
+    var total = total_pos - retenues + rembt;
+    //remplissage des champs
+    $("#traitement_brut").text(traitement_brut.toFixed(2));
+    $("#nbi").text(nbi.toFixed(2));
+    $('#indem_res').text(indem.toFixed(2));
+    $("#crds").text("- " + crds.toFixed(2));
+    $("#cs").text("- " + cs.toFixed(2));
+    $('#rafp').text("- " + rafp.toFixed(2));
+    $("#csg_deduc").text("- " + csg_deduc.toFixed(2));
+    $('#csg_non_deduc').text("- " + csg_non_deduc.toFixed(2));
+    $("#rpc").text("- " + rpc.toFixed(2));
+    $("#pcsV").text(pcsValue.toFixed(2));
+    $("#sft").text(sft.toFixed(2));
+    if(proto) {
+
+    } else {
+
+        $("#rsiV").text(rsiValue.toFixed(2));
+        $("#activity").text(primeActivity.toFixed(2));
+        $("#tech").text(technicity.toFixed(2));
+        $("#special").text(special.toFixed(2));
+    }
+
+    $("#total").text(total.toFixed(2));
+
 };
 
 //variables par défaut
-var year = 2017;
 var corps = 'ieeac';
-var protocole = document.location.pathname.indexOf('protocole') > 0
-var _fonctions = protocole ? fonctions : fonctions_rsi;
-var proto = moment('2017-07-01');
+var defaultDate = '01/02/2017';
+var protoDate = moment('2017-07-01');
+var currentMoment;
+var currentDate = '01/02/2017';
+var proto = false;
+var _pcs = pcs["2015"];
+var _activity_rate = activity_rate["2015"];
+var _yearEchelon = "2016";
+var _point_indice = point_indice["2015"];
+var _rsi = rsi["2015"];
+var _prime_tech = prime_tech["2015"];
+var _qualif_ieeac = qualif_ieeac["2017"];
+
+var initVar = function() {
+    if(currentDate.localeCompare('01/01/2016') == 0){
+        proto = false;
+        _pcs = pcs["2015"];
+        _activity_rate = activity_rate["2015"];
+        _yearEchelon = "2016";
+        _point_indice = point_indice["2015"];
+        _rsi = rsi["2015"];
+        _prime_tech = prime_tech["2015"];
+    } else if (currentDate.localeCompare('01/07/2016') == 0){
+        proto = false;
+        _pcs = pcs["2016"];
+        _activity_rate = activity_rate["2016"];
+        _yearEchelon = "2016";
+        _point_indice = point_indice["2016"];
+        _rsi = rsi["2016"];
+        _prime_tech = prime_tech["2016"];
+    } else if (currentDate.localeCompare('01/01/2017') == 0){
+        proto = false;
+        _pcs = pcs["2016"];
+        _activity_rate = activity_rate["2016"];
+        _yearEchelon = "2017";
+        _point_indice = point_indice["2016"];
+        _rsi = rsi["2016"];
+        _prime_tech = prime_tech["2016"];
+    } else if (currentDate.localeCompare('01/02/2017') == 0){
+        proto = false;
+        _pcs = pcs["2017"];
+        _activity_rate = activity_rate["2016"];
+        _yearEchelon = "2017";
+        _point_indice = point_indice["2017"];
+        _rsi = rsi["2016"];
+        _prime_tech = prime_tech["2016"];
+    } else if (currentDate.localeCompare('01/07/2017') == 0){
+        proto = true;
+        _pcs = pcs["2017"];
+        _activity_rate = activity_rate["2016"];
+        _yearEchelon = "2017";
+        _point_indice = point_indice["2017"];
+        _rsi = rsi["2016"];
+        _prime_tech = prime_tech["2016"];
+        _qualif_ieeac = qualif_ieeac["2017"];
+    } else if (currentDate.localeCompare('01/01/2018') == 0){
+        proto = true;
+        _pcs = pcs["2017"];
+        _activity_rate = activity_rate["2016"];
+        _yearEchelon = "2018";
+        _point_indice = point_indice["2017"];
+        _rsi = rsi["2016"];
+        _prime_tech = prime_tech["2016"];
+        _qualif_ieeac = qualif_ieeac["2018"];
+    } else if (currentDate.localeCompare('01/07/2018') == 0){
+        proto = true;
+        _pcs = pcs["2017"];
+        _activity_rate = activity_rate["2016"];
+        _yearEchelon = "2018";
+        _point_indice = point_indice["2017"];
+        _rsi = rsi["2016"];
+        _prime_tech = prime_tech["2016"];
+        _qualif_ieeac = qualif_ieeac["2018"];
+    } else if (currentDate.localeCompare('01/01/2019') == 0){
+        proto = true;
+        _pcs = pcs["2017"];
+        _activity_rate = activity_rate["2016"];
+        _yearEchelon = "2019";
+        _point_indice = point_indice["2017"];
+        _rsi = rsi["2016"];
+        _prime_tech = prime_tech["2016"];
+        _qualif_ieeac = qualif_ieeac["2019"];
+    }
+};
+
+var updateEchelons = function() {
+    var grade = $("#grade").val();
+    if(grade !== null) {
+        if(grade.localeCompare("détaché") == 0) {
+            var detach = $("#detachement").val();
+            if(detach !== null) {
+                var grille = echelons_detachement[_yearEchelon][detach];
+                for(var prop in grille) {
+                    $("#echelon option")
+                        .filter(function(){return $(this).html() == prop})
+                        .val(grille[prop]);
+                }
+            }
+        } else {
+            var grille = echelons[corps][_yearEchelon][grade];
+            for(var prop in grille){
+                $("#echelon option")
+                    .filter(function(){return $(this).html() == prop})
+                    .val(grille[prop]);
+            }
+        }
+    }
+};
 
 $(document).ready(function(){
 
@@ -502,27 +683,36 @@ $(document).ready(function(){
     }
 
     $('#validity').on('change', function(e) {
-       var date = moment($(this).find(':selected').text(), 'DD/MM/YYYY');
-
-       if(date < proto){
-           //avant protocole
-           //seul ieeac possible
-           if(corps.localeCompare('ieeac') == 0) {
-               $(".result .ieeac").show();
-               $(".result .ris").hide();
-               $("#corps-icna").addClass('disabled');
-               $("#corps-iessa").addClass('disabled');
-               $("#corps-tseeac").addClass('disabled');
-           }
-       } else {
-           //après protocole
-           $(".result .ieeac").hide();
-           $(".result .ris").show();
-           $("#corps-icna").removeClass('disabled');
-           $("#corps-iessa").removeClass('disabled');
-           $("#corps-tseeac").removeClass('disabled');
-       }
+        currentDate = $(this).find(':selected').text();
+        currentMoment = moment(currentDate, 'DD/MM/YYYY');
+        if(currentMoment < protoDate){
+            //avant protocole
+            //seul ieeac possible
+            if(corps.localeCompare('ieeac') == 0) {
+                $(".result .ieeac, #conditions .ieeac").show();
+                $(".result .ris, #conditions .ris").hide();
+                $("#corps-icna").addClass('disabled');
+                $("#corps-iessa").addClass('disabled');
+                $("#corps-tseeac").addClass('disabled');
+            }
+        } else {
+            //après protocole
+            $(".result .ieeac, #conditions .ieeac").hide();
+            $(".result .ris, #conditions .ris").show();
+            $("#corps-icna").removeClass('disabled');
+            $("#corps-iessa").removeClass('disabled');
+            $("#corps-tseeac").removeClass('disabled');
+        }
+        initVar();
+        //changement de valeur pour la PCS
+        $('#pcs option[value="pcs"]').text(_pcs);
+        var pcs150 = _pcs * 1.5;
+        $('#pcs option[value="pcs150"]').text(pcs150.toFixed(2));
+        updateEchelons();
+        compute_income();
     });
+
+    $('#validity').val(defaultDate).change(); //init Form with default date
 
     $('li.corps a').on('click', function(e){
         var c = $(this).closest('li').data('corps');
@@ -531,6 +721,7 @@ $(document).ready(function(){
         } else {
             $("#validity option.beforeprotocole").removeAttr('disabled');
         }
+        compute_income();
     });
 
     //init modal evs
@@ -538,7 +729,7 @@ $(document).ready(function(){
         valueNames: ['name', 'evs'],
         item: '<tr><td class="name"></td><td class="evs"></td><td><button data-dismiss="modal" class="use-evs btn btn-default btn-sm">Utiliser</button></td></tr>'
     };
-    var evsList = new List('evs_table', options, fonctions_evs);
+    var evsList = new List('evs_table', options, fonctions);
     evsList.sort('evs', {order: 'asc'});
     $("#search-fonction").on('keyup', function () {
         var searchString = $(this).val();
@@ -550,6 +741,22 @@ $(document).ready(function(){
         $("#evs").val(parseInt(value)).trigger('change');
     });
 
+    //init modal rsi
+    var options_rsi = {
+        valueNames: ['name', 'rsi'],
+        item: '<tr><td class="name"></td><td class="rsi"></td><td><button data-dismiss="modal" class="use-rsi btn btn-default btn-sm">Utiliser</button></td></tr>'
+    };
+    var rsiList = new List('rsi_table', options_rsi, fonctions.filter(function(obj){return obj.rsi > 0}));
+    rsiList.sort('rsi', {order: 'asc'});
+    $("#search-fonction-rsi").on('keyup', function(){
+        var searchString = $(this).val();
+        rsiList.fuzzySearch(searchString);
+    });
+    $(".use-rsi").on('click', function(e){
+        var value = $(this).closest('tr').find('.rsi').text();
+        $("#rsi").val(parseInt(value)).trigger('change');
+    });
+
     $('.corps a').on('click', function(e){
         $('.corps').removeClass('active');
         $(this).parent().addClass('active');
@@ -559,34 +766,33 @@ $(document).ready(function(){
     });
 
     $('#grade').on('change', function(e){
-
         var val = $(this).val();
-        var emploi = $("#emploi_fonctionnel");
-        var echelonbis = $("#echelonbis");
-        if(val.localeCompare('principal') == 0){
-            emploi.attr('disabled', false).closest('.form-group').show();
-            echelonbis.attr('disabled', false).closest('.form-group').show();
+        if(val.localeCompare("détaché") == 0) {
+            $("#detachForm").show();
         } else {
-            emploi.closest('.form-group').hide();
-            echelonbis.closest('.form-group').hide();
-            echelonbis.empty();
-            emploi.attr('disabled', true);
-            echelonbis.attr('disabled', true);
+            $("#detachForm").hide();
+            var echel = echelons[corps][_yearEchelon][val];
+            var echelForm = $("#echelon");
+            echelForm.empty().append($('<option disabled selected value> -- Sélectionner un échelon -- </option>'));
+            for(var prop in echel) {
+                echelForm.append($('<option value="' + echel[prop] + '">' + prop + '</option>'));
+            }
         }
-        remplir_echelon_normaux();
         compute_income();
     });
 
-    $("#emploi_fonctionnel").on('change', function(e){
+    $("#detachement").on('change', function(e) {
+        var val = $(this).val();
+        var grille = echelons_detachement[_yearEchelon][val];
+        var echelForm = $("#echelon");
+        echelForm.empty().append($('<option disabled selected value> -- Sélectionner un échelon -- </option>'));
+        for(var prop in grille) {
+            echelForm.append($('<option value="'+grille[prop]+'">' + prop + '</option>'));
+        }
         compute_income();
-        remplir_echelon_fonctionnels();
     });
 
     $("#echelon").on('change', function(e){
-        compute_income();
-    });
-
-    $("#echelonbis").on('change', function(e){
         compute_income();
     });
 
@@ -606,6 +812,10 @@ $(document).ready(function(){
         compute_income();
     });
 
+    $("#rsi").on('change keyup', function(e){
+        compute_income();
+    });
+
     $("#evs").on('change keyup', function(e){
         compute_income();
     });
@@ -621,9 +831,9 @@ $(document).ready(function(){
     $("#affect").on('change', function(e){
         compute_income();
     });
-    
+
     $("#region").on('change', function(e) {
-       compute_income();
+        compute_income();
     });
 
     $('#pcs').on('change', function(e){
