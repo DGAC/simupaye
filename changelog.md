@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 16 juin 2017
+
+* Ajout de la majoration géographique pour la partie RIST
+
 ## 31 mars 2017
 
 * Prise en compte des revalorisations

@@ -125,6 +125,17 @@ var compute_income = function() {
         partFonction += pcsValue;
         total_pos += partFonction;
 
+        //majoration géographique temporaire : calquée sur le calcul avant RIST
+        var niveauRSI = isNaN(niveauEVS) ? 0 : niveauEVS - 9;
+        var majGeo = 0;
+        if(niveauRSI > 0) {
+            majGeo += _rsi[niveauRSI] * 696 * _point_indice * _activity_rate / 100 * (maj-1);
+        }
+        var indiceActivity = Math.min(696, indice);
+        majGeo += _activity_rate / 100 * indiceActivity * _point_indice * (maj-1);
+
+        total_pos += majGeo;
+
         //part expérience
         var partExp = 0;
         switch (corps) {
@@ -273,6 +284,7 @@ var compute_income = function() {
         $("#part_fonction").text(partFonction.toFixed(2));
         $("#part_xp").text(partExp.toFixed(2));
         $("#part_technique").text(partTech.toFixed(2));
+        $("#maj").text(majGeo.toFixed(2));
     } else {
         $("#rsiV").text(rsiValue.toFixed(2));
         $("#activity").text(primeActivity.toFixed(2));
