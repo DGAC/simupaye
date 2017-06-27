@@ -16,6 +16,8 @@ Textes réglementaires utilisés pour déterminer les calculs du simulateur :
 * Prime de technicité : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000029467053&dateTexte=&categorieLien=id)
 
 ## Textes généraux
+* Conditions d'avancement dans les emplois détachés (CTAC, CUTAC, ...) [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=LEGITEXT000019057771)
+* Fonctions requises pour l'accès aux emplois détachés : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=LEGITEXT000031277018)
 * Prime de contrainte de service : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=LEGITEXT000019678445)
 * Indemnité forfaitaire d'astreinte : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000000246795)
 * Références utilisées pour calculer les retenues (CSG, RAFP, ...) [Service-public.fr](https://www.service-public.fr/particuliers/vosdroits/F468)
