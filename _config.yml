@@ -11,6 +11,7 @@ email: bruno.spyckerelle@aviation-civile.gouv.fr
 description: > # this means to ignore newlines until "baseurl:"
   Simulateur de salaire pour les agents de la DGAC.
 baseurl: "/simupaye" # the subpath of your site, e.g. /blog
+keywords: "ieeac, icna, tseeac, iessa, salaire, simulateur"
 url: "https://dgacfr.github.io" # the base hostname & protocol for your site
 twitter_username: Bruno_Spy
 github_username:  BrunoSpy
