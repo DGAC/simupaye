@@ -7,7 +7,7 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
-## 24/07/2016
+## 24 juillet 2017
 
 * Correction taux RPC
 
