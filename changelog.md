@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 24/07/2016
+
+* Correction taux RPC
+
 ## 16 juin 2017
 
 * Ajout de la majoration géographique pour la partie RIST

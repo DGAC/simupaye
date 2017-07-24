@@ -4,7 +4,13 @@ var point_indice = {
     "2017" : 4.6860 //à partir du 1/2/17
 };
 
-var rpc_rate = 9.94;
+// retenue pension civile
+var rpc_rate = {
+    "2016" : 9.94,
+    "2017" : 10.29,
+    "2018" : 10.56,
+    "2019" : 10.83
+};
 
 var activity_rate = {
     "2015": 41.21,

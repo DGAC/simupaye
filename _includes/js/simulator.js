@@ -243,7 +243,7 @@ var compute_income = function() {
     retenues += crds;
 
     //retenue pour pension civile
-    var rpc = (traitement_brut + nbi) * rpc_rate / 100;
+    var rpc = (traitement_brut + nbi) * _rpc / 100;
     retenues += rpc;
 
     //rafp
@@ -313,6 +313,7 @@ var _prime_tech = prime_tech["2015"];
 var _evs = evs["2017"];
 var _exp = exp["2017"];
 var _partTechIEEAC = partTechIEEAC["2017"];
+var _rpc = rpc_rate["2017"];
 
 var initVar = function() {
     if(currentDate.localeCompare('01/01/2016') == 0){
@@ -326,6 +327,7 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
+        _rpc = rpc_rate["2016"];
     } else if (currentDate.localeCompare('01/07/2016') == 0){
         proto = false;
         _pcs = pcs["2016"];
@@ -337,6 +339,7 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
+        _rpc = rpc_rate["2016"];
     } else if (currentDate.localeCompare('01/01/2017') == 0){
         proto = false;
         _pcs = pcs["2016"];
@@ -348,6 +351,7 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
+        _rpc = rpc_rate["2017"];
     } else if (currentDate.localeCompare('01/02/2017') == 0){
         proto = false;
         _pcs = pcs["2017"];
@@ -359,6 +363,7 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
+        _rpc = rpc_rate["2017"];
     } else if (currentDate.localeCompare('01/07/2017') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -370,6 +375,7 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
+        _rpc = rpc_rate["2017"];
     } else if (currentDate.localeCompare('01/01/2018') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -381,6 +387,7 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
+        _rpc = rpc_rate["2018"];
     } else if (currentDate.localeCompare('01/07/2018') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -392,6 +399,7 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2018"];
+        _rpc = rpc_rate["2018"];
     } else if (currentDate.localeCompare('01/01/2019') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -403,6 +411,7 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2019"];
+        _rpc = rpc_rate["2019"];
     }
 };
 

@@ -21,4 +21,4 @@ Textes réglementaires utilisés pour déterminer les calculs du simulateur :
 * Prime de contrainte de service : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=LEGITEXT000019678445)
 * Indemnité forfaitaire d'astreinte : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000000246795)
 * Références utilisées pour calculer les retenues (CSG, RAFP, ...) [Service-public.fr](https://www.service-public.fr/particuliers/vosdroits/F468)
-
+* Taux retenue pension civile [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000023335006&dateTexte=20170724)
