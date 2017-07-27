@@ -40,3 +40,17 @@ var date = [
     "01/07/2018",
     "01/01/2019"
 ];
+
+//nombre de points d'indice à ajouter dans le cadre du transfert primes/points
+var transfertPrimes = {
+    "2016": 0,
+    "2017": 4,
+    "2018": 9
+};
+
+//retenue à ajouter dans le cadre du transfert primes/points
+var transfertRetenue = {
+    "2016": 0,
+    "2017": 13.92,
+    "2018": 32.42
+};

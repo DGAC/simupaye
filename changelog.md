@@ -7,13 +7,18 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 27 juillet 2017
+
+* Intégration PPCR transfert primes/points
+* Ajout d'une page récapitulant les évolutions salariales
+
 ## 24 juillet 2017
 
 * Correction taux RPC
 
 ## 16 juin 2017
 
-* Ajout de la majoration géographique pour la partie RIST
+* Ajout de la majoration géographique pour la partie RIST (valeur indicative)
 
 ## 31 mars 2017
 

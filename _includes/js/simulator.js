@@ -49,6 +49,10 @@ var compute_income = function() {
     if(isNaN(indice)){
         indice = 0;
     }
+
+    //transfert primes/points à partir du 1er janvier 2017
+    indice += _transfertPrimes;
+
     var traitement_brut = indice*_point_indice;
     total_pos += traitement_brut;
 
@@ -266,6 +270,10 @@ var compute_income = function() {
     retenues += csg_deduc;
     retenues += csg_non_deduc;
 
+    //transfert primes/points
+    var transfert = _transfertRetenue;
+    retenues += transfert;
+
     var total = total_pos - retenues + rembt;
     //remplissage des champs
     $("#traitement_brut").text(traitement_brut.toFixed(2));
@@ -279,6 +287,7 @@ var compute_income = function() {
     $("#rpc").text("- " + rpc.toFixed(2));
     $("#pcsV").text(pcsValue.toFixed(2));
     $("#sft").text(sft.toFixed(2));
+    $("#transfert").text("- " + transfert.toFixed(2));
 
     if(proto) {
         $("#part_fonction").text(partFonction.toFixed(2));
@@ -300,6 +309,7 @@ var compute_income = function() {
 var corps = 'ieeac';
 var defaultDate = '01/02/2017';
 var protoDate = moment('2017-07-01');
+var transfertDate = moment('2017-01-01');
 var currentMoment;
 var currentDate = '01/02/2017';
 var proto = false;
@@ -314,6 +324,8 @@ var _evs = evs["2017"];
 var _exp = exp["2017"];
 var _partTechIEEAC = partTechIEEAC["2017"];
 var _rpc = rpc_rate["2017"];
+var _transfertPrimes = transfertPrimes["2017"];
+var _transfertRetenue = transfertRetenue["2017"];
 
 var initVar = function() {
     if(currentDate.localeCompare('01/01/2016') == 0){
@@ -327,6 +339,8 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
+        _transfertPrimes = transfertPrimes["2016"];
+        _transfertRetenue = transfertRetenue["2016"];
         _rpc = rpc_rate["2016"];
     } else if (currentDate.localeCompare('01/07/2016') == 0){
         proto = false;
@@ -339,6 +353,8 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
+        _transfertPrimes = transfertPrimes["2016"];
+        _transfertRetenue = transfertRetenue["2016"];
         _rpc = rpc_rate["2016"];
     } else if (currentDate.localeCompare('01/01/2017') == 0){
         proto = false;
@@ -352,6 +368,8 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
         _rpc = rpc_rate["2017"];
+        _transfertPrimes = transfertPrimes["2017"];
+        _transfertRetenue = transfertRetenue["2017"];
     } else if (currentDate.localeCompare('01/02/2017') == 0){
         proto = false;
         _pcs = pcs["2017"];
@@ -364,6 +382,8 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
         _rpc = rpc_rate["2017"];
+        _transfertPrimes = transfertPrimes["2017"];
+        _transfertRetenue = transfertRetenue["2017"];
     } else if (currentDate.localeCompare('01/07/2017') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -376,18 +396,22 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
         _rpc = rpc_rate["2017"];
+        _transfertPrimes = transfertPrimes["2017"];
+        _transfertRetenue = transfertRetenue["2017"];
     } else if (currentDate.localeCompare('01/01/2018') == 0){
         proto = true;
         _pcs = pcs["2017"];
         _activity_rate = activity_rate["2016"];
-        _yearEchelon = "2018";
-        //_point_indice = point_indice["2017"];
+        //_yearEchelon = "2018";
+        _point_indice = point_indice["2017"];
         _rsi = rsi["2016"];
         _prime_tech = prime_tech["2016"];
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
         _rpc = rpc_rate["2018"];
+        _transfertPrimes = transfertPrimes["2018"];
+        _transfertRetenue = transfertRetenue["2018"];
     } else if (currentDate.localeCompare('01/07/2018') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -400,6 +424,8 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2018"];
         _rpc = rpc_rate["2018"];
+        _transfertPrimes = transfertPrimes["2018"];
+        _transfertRetenue = transfertRetenue["2018"];
     } else if (currentDate.localeCompare('01/01/2019') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -412,6 +438,8 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2019"];
         _rpc = rpc_rate["2019"];
+        _transfertPrimes = transfertPrimes["2018"];
+        _transfertRetenue = transfertRetenue["2018"];
     }
 };
 
@@ -465,9 +493,15 @@ $(document).ready(function(){
             //après protocole
             $(".result .ieeac, #conditions .ieeac").hide();
             $(".result .ris, #conditions .ris").show();
-            $("#corps-icna").removeClass('disabled');
-            $("#corps-iessa").removeClass('disabled');
-            $("#corps-tseeac").removeClass('disabled');
+            //autres corps à activer par la suite
+            //$("#corps-icna").removeClass('disabled');
+            //$("#corps-iessa").removeClass('disabled');
+            //$("#corps-tseeac").removeClass('disabled');
+        }
+        if(currentMoment < transfertDate) {
+            $("#transfert").parent().hide();
+        } else {
+            $("#transfert").parent().show();
         }
         initVar();
         //changement de valeur pour la PCS
