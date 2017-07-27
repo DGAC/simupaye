@@ -7,7 +7,8 @@ permalink: /textes/
 Textes réglementaires utilisés pour déterminer les calculs du simulateur :
 
 ## Après le RIST
-* Décret RIST [Legifrance](https://www.legifrance.gouv.fr/eli/decret/2016/12/26/DEVA1631849D/jo/texte)
+* Décret RIST : [Legifrance](https://www.legifrance.gouv.fr/eli/decret/2016/12/26/DEVA1631849D/jo/texte)
+* IEEAC : Part Etudes et Exploitation : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000034517492&dateTexte=20170727)
 
 ## Avant le RIST : textes pour les IEEAC
 * Décret cadre : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000022673110)
