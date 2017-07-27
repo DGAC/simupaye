@@ -10,7 +10,7 @@ js:
 ---
 
 <div class="alert alert-danger">
-    Toutes les données ne sont pas encore disponibles pour les calculs à partir du 1er juillet 2017 : la modulation part fonction IEEAC n'est pas incluse, la majoration géographique est une estimation.<br/>
+    Toutes les données ne sont pas encore disponibles pour les calculs à partir du 1er juillet 2017 : la modulation géographique de la part Fonction est une estimation.<br/>
     Les grilles PPCR ne sont pas prises en compte (revalorisation des grilles indiciaires échelonnée entre 2017 et 2020).
 </div>
 
@@ -153,7 +153,7 @@ js:
                         <td id="nbi"></td>
                     </tr>
                     <tr class="active ris">
-                        <td data-toggle="tooltip" data-placement="top" data-container="body" data-title="Valeur donnée à titre indicatif">Majoration géographique*</td>
+                        <td data-toggle="tooltip" data-placement="top" data-container="body" data-title="Valeur donnée à titre indicatif. Sur la fiche de paye, elle est intégrée dans la part Fonction.">Modulation géographique*</td>
                         <td id="maj"></td>
                     </tr>
                     <tr class="active">
@@ -183,6 +183,10 @@ js:
                     <tr class="active ris">
                         <td>Part fonction</td>
                         <td id="part_fonction"></td>
+                    </tr>
+                    <tr class="active ris">
+                        <td>Majoration Geo N/NE</td>
+                        <td id="ris_maj"></td>
                     </tr>
                     <tr class="active ris">
                         <td>Part expérience</td>

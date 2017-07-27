@@ -126,8 +126,8 @@ var compute_income = function() {
         if(!isNaN(niveauEVS)) {
             partFonction = _evs[niveauEVS];
         }
-        partFonction += pcsValue;
-        total_pos += partFonction;
+
+        total_pos += pcsValue;
 
         //majoration géographique temporaire : calquée sur le calcul avant RIST
         var niveauRSI = isNaN(niveauEVS) ? 0 : niveauEVS - 9;
@@ -192,6 +192,11 @@ var compute_income = function() {
                             }
                     }
                 }
+                //ajout de la modulation suite revalorisation protocole 2016-2019
+                if(!isNaN(niveauEVS)) {
+                    partFonction += _modulationIEEAC[niveauEVS];
+                }
+                total_pos += partFonction;
                 break;
             default:
         }
@@ -294,6 +299,7 @@ var compute_income = function() {
         $("#part_xp").text(partExp.toFixed(2));
         $("#part_technique").text(partTech.toFixed(2));
         $("#maj").text(majGeo.toFixed(2));
+        $("#ris_maj").text(pcsValue.toFixed(2));
     } else {
         $("#rsiV").text(rsiValue.toFixed(2));
         $("#activity").text(primeActivity.toFixed(2));
@@ -326,6 +332,7 @@ var _partTechIEEAC = partTechIEEAC["2017"];
 var _rpc = rpc_rate["2017"];
 var _transfertPrimes = transfertPrimes["2017"];
 var _transfertRetenue = transfertRetenue["2017"];
+var _modulationIEEAC = modulation_ieeac["2017"];
 
 var initVar = function() {
     if(currentDate.localeCompare('01/01/2016') == 0){

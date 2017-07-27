@@ -860,6 +860,17 @@ var evs = {
     }
 };
 
+var modulation_ieeac = {
+  "2017" : {
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 42.76,
+      "14": 127.31,
+      "15": 148.97
+  }
+};
+
 var exp = {
     "2017": {
         //Personnels stagiaires

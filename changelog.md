@@ -11,6 +11,7 @@ permalink: /changelog/
 
 * Intégration PPCR transfert primes/points
 * Ajout d'une page récapitulant les évolutions salariales
+* Prise en compte modulation part Fonction pour les IEEAC
 
 ## 24 juillet 2017
 
