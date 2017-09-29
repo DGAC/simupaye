@@ -129,14 +129,13 @@ var compute_income = function() {
 
         total_pos += pcsValue;
 
-        //majoration géographique temporaire : calquée sur le calcul avant RIST
-        var niveauRSI = isNaN(niveauEVS) ? 0 : niveauEVS - 9;
+        //modulation géographique N/NE
+        //normalement incluse dans la part Fonction
+        //à ne pas confondre avec la majoration N/NE, ancienne PCS
         var majGeo = 0;
-        if(niveauRSI > 0) {
-            majGeo += _rsi[niveauRSI] * 696 * _point_indice * _activity_rate / 100 * (maj-1);
+        if(maj > 1 && !isNaN(niveauEVS)) {
+            majGeo = _modulationGeoIEEAC[niveauEVS];
         }
-        var indiceActivity = Math.min(696, indice);
-        majGeo += _activity_rate / 100 * indiceActivity * _point_indice * (maj-1);
 
         total_pos += majGeo;
 
@@ -313,19 +312,19 @@ var compute_income = function() {
 
 //variables par défaut
 var corps = 'ieeac';
-var defaultDate = '01/02/2017';
+var defaultDate = '01/07/2017';
 var protoDate = moment('2017-07-01');
 var transfertDate = moment('2017-01-01');
 var currentMoment;
-var currentDate = '01/02/2017';
-var proto = false;
-var _pcs = pcs["2015"];
-var _activity_rate = activity_rate["2015"];
+var currentDate = '01/07/2017';
+var proto = true;
+var _pcs = pcs["2017"];
+var _activity_rate = activity_rate["2016"];
 //TODO prendre en compte la PPCR une fois qu'on saura comment ça marche
 var _yearEchelon = "2016";
-var _point_indice = point_indice["2015"];
-var _rsi = rsi["2015"];
-var _prime_tech = prime_tech["2015"];
+var _point_indice = point_indice["2017"];
+var _rsi = rsi["2016"];
+var _prime_tech = prime_tech["2016"];
 var _evs = evs["2017"];
 var _exp = exp["2017"];
 var _partTechIEEAC = partTechIEEAC["2017"];
@@ -333,6 +332,7 @@ var _rpc = rpc_rate["2017"];
 var _transfertPrimes = transfertPrimes["2017"];
 var _transfertRetenue = transfertRetenue["2017"];
 var _modulationIEEAC = modulation_ieeac["2017"];
+var _modulationGeoIEEAC = modulation_geo_ieeac["2017"];
 
 var initVar = function() {
     if(currentDate.localeCompare('01/01/2016') == 0){

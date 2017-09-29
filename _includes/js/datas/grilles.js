@@ -871,6 +871,17 @@ var modulation_ieeac = {
   }
 };
 
+var modulation_geo_ieeac = {
+    "2017" : {
+        "10": 61.14,
+        "11": 68.25,
+        "12": 80.04,
+        "13": 85.28,
+        "14": 89.46,
+        "15": 93.31
+    }
+};
+
 var exp = {
     "2017": {
         //Personnels stagiaires
