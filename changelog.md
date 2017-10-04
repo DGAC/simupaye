@@ -7,6 +7,11 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 04 octobre 2017
+
+* Prise en compte des valeurs officielles pour la modulation géographique
+* Date par défaut fixée au 01/07/2017
+
 ## 27 juillet 2017
 
 * Intégration PPCR transfert primes/points

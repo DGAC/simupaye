@@ -136,6 +136,16 @@ var compute_income = function() {
         if(maj > 1 && !isNaN(niveauEVS)) {
             majGeo = _modulationGeoIEEAC[niveauEVS];
         }
+/*
+        //majoration géographique temporaire : calquée sur le calcul avant RIST
+        var niveauRSI = isNaN(niveauEVS) ? 0 : niveauEVS - 9;
+        var majGeo = 0;
+        if(niveauRSI > 0) {
+            majGeo += _rsi[niveauRSI] * 696 * _point_indice * _activity_rate / 100 * (maj-1);
+        }
+        var indiceActivity = Math.min(696, indice);
+        majGeo += _activity_rate / 100 * indiceActivity * _point_indice * (maj-1);
+*/
 
         total_pos += majGeo;
 
