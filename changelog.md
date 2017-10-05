@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 05 octobre 2017
+
+* Correction de la valeur de la part expérience
+
 ## 04 octobre 2017
 
 * Prise en compte des valeurs officielles pour la modulation géographique
