@@ -891,7 +891,7 @@ var exp = {
         //TSEEAC P ou N avec 1e qualification + 1 an, IESSA N, ICNA N
         "3": 361.46,
         //TSEEAC E ou P avec 2e qualification + 1 an, IESSA P, ICNA P et IEEAC N
-        "4": 432.58,
+        "4": 432.85,
         //IESSA D ou C, ICNA D ou C, IEEAC P ou HC, RTAC ou CTAC
         "5": 532.77
     }
