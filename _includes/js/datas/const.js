@@ -20,7 +20,7 @@ var activity_rate = {
 var pcs = {
     "2015" : 102.40,
     "2016" : 103.01, //à partir du 1/7/16
-    "2017" : 103.62 //à partir du 1/2/17
+    "2017" : 103.63 //à partir du 1/2/17
 };
 
 var points_nbi = {
@@ -45,12 +45,17 @@ var date = [
 var transfertPrimes = {
     "2016": 0,
     "2017": 4,
-    "2018": 9
+    "2019": 9
 };
 
 //retenue à ajouter dans le cadre du transfert primes/points
 var transfertRetenue = {
     "2016": 0,
     "2017": 13.92,
-    "2018": 32.42
+    "2019": 32.42
 };
+
+var csg_deduc = {
+    "2017": 5.1,
+    "2018": 6.8
+}

@@ -10,7 +10,6 @@ js:
 ---
 
 <div class="alert alert-danger">
-    Les valeurs de la modulation géographique de la part Fonction ne sont pas encore officielles.<br/>
     Les grilles PPCR ne sont pas prises en compte (revalorisation des grilles indiciaires échelonnée entre 2017 et 2020).
 </div>
 
@@ -136,6 +135,12 @@ js:
                         <input type="text" class="form-control" id="rembt">
                     </div>
                 </div>
+                <div class="form-group" id="comp_csg">
+                    <label for="indem_csg" class="col-sm-3 control-label">Compensation CSG</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="indem_csg">
+                    </div>
+                </div>
             </form>
         </div>
         <div class="col-md-6">
@@ -151,10 +156,6 @@ js:
                     <tr class="active">
                         <td>NBI</td>
                         <td id="nbi"></td>
-                    </tr>
-                    <tr class="active ris">
-                        <td data-toggle="tooltip" data-placement="top" data-container="body" data-title="Valeur donnée à titre indicatif. Sur la fiche de paye, elle est intégrée dans la part Fonction.">Modulation géographique*</td>
-                        <td id="maj"></td>
                     </tr>
                     <tr class="active">
                         <td>Indemnité de résidence</td>
@@ -199,6 +200,10 @@ js:
                     <tr class="active">
                         <td>Supplément familial</td>
                         <td id="sft"></td>
+                    </tr>
+                    <tr class="active">
+                        <td>Compensation CSG</td>
+                        <td id="ccsg"></td>
                     </tr>
                     <tr>
                         <td>CSG déductible</td>

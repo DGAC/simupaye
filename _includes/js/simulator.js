@@ -53,7 +53,7 @@ var compute_income = function() {
     //transfert primes/points à partir du 1er janvier 2017
     indice += _transfertPrimes;
 
-    var traitement_brut = indice*_point_indice;
+    var traitement_brut = Math.round(indice*_point_indice*100)/100;
     total_pos += traitement_brut;
 
     var echelon = $("#echelon option:selected").text();
@@ -132,22 +132,10 @@ var compute_income = function() {
         //modulation géographique N/NE
         //normalement incluse dans la part Fonction
         //à ne pas confondre avec la majoration N/NE, ancienne PCS
-        var majGeo = 0;
+        var modulationPF = 0;
         if(maj > 1 && !isNaN(niveauEVS)) {
-            majGeo = _modulationGeoIEEAC[niveauEVS];
+            modulationPF = _modulationGeoIEEAC[niveauEVS];
         }
-/*
-        //majoration géographique temporaire : calquée sur le calcul avant RIST
-        var niveauRSI = isNaN(niveauEVS) ? 0 : niveauEVS - 9;
-        var majGeo = 0;
-        if(niveauRSI > 0) {
-            majGeo += _rsi[niveauRSI] * 696 * _point_indice * _activity_rate / 100 * (maj-1);
-        }
-        var indiceActivity = Math.min(696, indice);
-        majGeo += _activity_rate / 100 * indiceActivity * _point_indice * (maj-1);
-*/
-
-        total_pos += majGeo;
 
         //part expérience
         var partExp = 0;
@@ -203,7 +191,9 @@ var compute_income = function() {
                 }
                 //ajout de la modulation suite revalorisation protocole 2016-2019
                 if(!isNaN(niveauEVS)) {
-                    partFonction += _modulationIEEAC[niveauEVS];
+                    modulationPF += _modulationIEEAC[niveauEVS];
+                    //la modulation PF est plafonnée à 120% de la PF
+                    partFonction = Math.min(partFonction*1.2, partFonction+modulationPF);
                 }
                 total_pos += partFonction;
                 break;
@@ -254,6 +244,12 @@ var compute_income = function() {
         rembt = temp;
     }
 
+    var compCSG = 0;
+    temp = parseFloat($('#indem_csg').val());
+    if(!isNaN(temp)) {
+        compCSG = temp;
+    }
+
     var retenues = 0;
 
     //crds
@@ -275,12 +271,15 @@ var compute_income = function() {
     retenues += rafp;
 
     //contribution solidarité
-    var cs = (total_pos - rpc - rafp) * 1 / 100;
-    retenues += cs;
+    //supprimée lors de l'augmentation de la csg en 2018
+    if(currentMoment < csgDate) {
+        var cs = (total_pos - rpc - rafp) * 1 / 100;
+        retenues += cs;
+    }
 
     //csg
-    var csg_deduc = 98.25 / 100 * 5.1 / 100 * total_pos;
-    var csg_non_deduc = 98.25 / 100 * 2.4 / 100 * total_pos;
+    var csg_deduc = 98.25 / 100 * _csg_deduc / 100 * (total_pos+rembt);
+    var csg_non_deduc = 98.25 / 100 * 2.4 / 100 * (total_pos+rembt);
     retenues += csg_deduc;
     retenues += csg_non_deduc;
 
@@ -289,12 +288,21 @@ var compute_income = function() {
     retenues += transfert;
 
     var total = total_pos - retenues + rembt;
+
+    if(currentMoment >= csgDate) {
+        total += compCSG;
+    }
+
     //remplissage des champs
-    $("#traitement_brut").text(traitement_brut.toFixed(2));
+    $("#traitement_brut").text(traitement_brut);
     $("#nbi").text(nbi.toFixed(2));
     $('#indem_res').text(indem.toFixed(2));
     $("#crds").text("- " + crds.toFixed(2));
-    $("#cs").text("- " + cs.toFixed(2));
+    if(currentMoment < csgDate) {
+        $("#cs").text("- " + cs.toFixed(2));
+    } else {
+        $("#ccsg").text(compCSG.toFixed(2));
+    }
     $('#rafp').text("- " + rafp.toFixed(2));
     $("#csg_deduc").text("- " + csg_deduc.toFixed(2));
     $('#csg_non_deduc').text("- " + csg_non_deduc.toFixed(2));
@@ -307,7 +315,6 @@ var compute_income = function() {
         $("#part_fonction").text(partFonction.toFixed(2));
         $("#part_xp").text(partExp.toFixed(2));
         $("#part_technique").text(partTech.toFixed(2));
-        $("#maj").text(majGeo.toFixed(2));
         $("#ris_maj").text(pcsValue.toFixed(2));
     } else {
         $("#rsiV").text(rsiValue.toFixed(2));
@@ -322,11 +329,12 @@ var compute_income = function() {
 
 //variables par défaut
 var corps = 'ieeac';
-var defaultDate = '01/07/2017';
+var defaultDate = '01/01/2018';
 var protoDate = moment('2017-07-01');
 var transfertDate = moment('2017-01-01');
+var csgDate = moment('2018-01-01');
 var currentMoment;
-var currentDate = '01/07/2017';
+var currentDate = '01/01/2018';
 var proto = true;
 var _pcs = pcs["2017"];
 var _activity_rate = activity_rate["2016"];
@@ -338,11 +346,12 @@ var _prime_tech = prime_tech["2016"];
 var _evs = evs["2017"];
 var _exp = exp["2017"];
 var _partTechIEEAC = partTechIEEAC["2017"];
-var _rpc = rpc_rate["2017"];
+var _rpc = rpc_rate["2018"];
 var _transfertPrimes = transfertPrimes["2017"];
 var _transfertRetenue = transfertRetenue["2017"];
 var _modulationIEEAC = modulation_ieeac["2017"];
 var _modulationGeoIEEAC = modulation_geo_ieeac["2017"];
+var _csg_deduc = csg_deduc["2018"];
 
 var initVar = function() {
     if(currentDate.localeCompare('01/01/2016') == 0){
@@ -359,6 +368,7 @@ var initVar = function() {
         _transfertPrimes = transfertPrimes["2016"];
         _transfertRetenue = transfertRetenue["2016"];
         _rpc = rpc_rate["2016"];
+        _csg_deduc = csg_deduc["2017"];
     } else if (currentDate.localeCompare('01/07/2016') == 0){
         proto = false;
         _pcs = pcs["2016"];
@@ -373,6 +383,7 @@ var initVar = function() {
         _transfertPrimes = transfertPrimes["2016"];
         _transfertRetenue = transfertRetenue["2016"];
         _rpc = rpc_rate["2016"];
+        _csg_deduc = csg_deduc["2017"];
     } else if (currentDate.localeCompare('01/01/2017') == 0){
         proto = false;
         _pcs = pcs["2016"];
@@ -387,6 +398,7 @@ var initVar = function() {
         _rpc = rpc_rate["2017"];
         _transfertPrimes = transfertPrimes["2017"];
         _transfertRetenue = transfertRetenue["2017"];
+        _csg_deduc = csg_deduc["2017"];
     } else if (currentDate.localeCompare('01/02/2017') == 0){
         proto = false;
         _pcs = pcs["2017"];
@@ -401,6 +413,7 @@ var initVar = function() {
         _rpc = rpc_rate["2017"];
         _transfertPrimes = transfertPrimes["2017"];
         _transfertRetenue = transfertRetenue["2017"];
+        _csg_deduc = csg_deduc["2017"];
     } else if (currentDate.localeCompare('01/07/2017') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -415,6 +428,7 @@ var initVar = function() {
         _rpc = rpc_rate["2017"];
         _transfertPrimes = transfertPrimes["2017"];
         _transfertRetenue = transfertRetenue["2017"];
+        _csg_deduc = csg_deduc["2017"];
     } else if (currentDate.localeCompare('01/01/2018') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -427,8 +441,9 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
         _rpc = rpc_rate["2018"];
-        _transfertPrimes = transfertPrimes["2018"];
-        _transfertRetenue = transfertRetenue["2018"];
+        _transfertPrimes = transfertPrimes["2017"];
+        _transfertRetenue = transfertRetenue["2017"];
+        _csg_deduc = csg_deduc["2018"];
     } else if (currentDate.localeCompare('01/07/2018') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -441,8 +456,9 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2018"];
         _rpc = rpc_rate["2018"];
-        _transfertPrimes = transfertPrimes["2018"];
-        _transfertRetenue = transfertRetenue["2018"];
+        _transfertPrimes = transfertPrimes["2017"];
+        _transfertRetenue = transfertRetenue["2017"];
+        _csg_deduc = csg_deduc["2018"];
     } else if (currentDate.localeCompare('01/01/2019') == 0){
         proto = true;
         _pcs = pcs["2017"];
@@ -455,8 +471,9 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2019"];
         _rpc = rpc_rate["2019"];
-        _transfertPrimes = transfertPrimes["2018"];
-        _transfertRetenue = transfertRetenue["2018"];
+        _transfertPrimes = transfertPrimes["2019"];
+        _transfertRetenue = transfertRetenue["2019"];
+        _csg_deduc = csg_deduc["2018"];
     }
 };
 
@@ -519,6 +536,15 @@ $(document).ready(function(){
             $("#transfert").parent().hide();
         } else {
             $("#transfert").parent().show();
+        }
+        if(currentMoment < csgDate) {
+            $("#comp_csg").hide();
+            $('#ccsg').parent().hide();
+            $("#cs").parent().show();
+        } else {
+            $("#comp_csg").show();
+            $('#ccsg').parent().show();
+            $("#cs").parent().hide();
         }
         initVar();
         //changement de valeur pour la PCS
@@ -653,6 +679,10 @@ $(document).ready(function(){
     });
 
     $('#rembt').on('change', function(e){
+        compute_income();
+    });
+
+    $('#indem_csg').on('change', function(e){
         compute_income();
     });
 

@@ -7,6 +7,15 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 21 mars 2018
+
+* Changement de la date par défaut du simulateur
+* Changement du taux de la CSG
+* Intégration de la modulation géographique dans la part fonction
+* Plafonnement à 120% de la modulation part fonction (modulation IEEAC, modulation géo, modulation DSAC RMA)
+* Report de la deuxième phase du transfert prime/points au 1er janvier 2019
+* Correction intégration du remboursement domicile.travail dans la CSG
+
 ## 05 octobre 2017
 
 * Correction de la valeur de la part expérience
