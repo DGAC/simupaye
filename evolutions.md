@@ -7,11 +7,12 @@ permalink: /evolutions/
 ## 1er janvier 2019
 
 * Passage du taux de RPC de 10.56% à 10.83%
+* Deuxième étape du transfert prime/points : 5 points supplémentaires (total : 9 points)
 
 ## 1er janvier 2018
 
 * Passage du taux de RPC de 10.29% à 10.56%
-* Deuxième étape du transfert prime/points : 5 points supplémentaires (total : 9 points)
+* Augmentation de la CSG, compensation sur la base du traitement 2017 et suppression de la contribution solidarité
 
 ## 1er juillet 2017
 
@@ -20,7 +21,7 @@ permalink: /evolutions/
 ## 1er février 2017
 
 * Passage de la valeur du point d'indice de 4.6581 à 4.6860
-  * Conséquence : passage de la PCS de 103.01€ à 103.62€
+  * Conséquence : passage de la PCS de 103.01€ à 103.63€
 
 ## 1er janvier 2017
 
