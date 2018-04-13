@@ -13,6 +13,7 @@ permalink: /evolutions/
 
 * Passage du taux de RPC de 10.29% à 10.56%
 * Augmentation de la CSG, compensation sur la base du traitement 2017 et suppression de la contribution solidarité
+* Revalorisation part technique IEEAC
 
 ## 1er juillet 2017
 

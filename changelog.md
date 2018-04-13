@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 13 avril 2018
+
+* Correction revalorisation part technique IEEAC
+
 ## 21 mars 2018
 
 * Changement de la date par défaut du simulateur
