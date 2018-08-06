@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 6 août 2018
+
+* Prise en compte PPCR : impact sur les grilles au 1er janvier 2017, 2019 et 2020
+
 ## 13 avril 2018
 
 * Correction revalorisation part technique IEEAC

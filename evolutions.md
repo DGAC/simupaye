@@ -4,10 +4,15 @@ title: Évolutions de salaire
 permalink: /evolutions/
 ---
 
+## 1er janvier 2020
+
+* Revalorisation indiciaire (PPCR 3/3)
+
 ## 1er janvier 2019
 
 * Passage du taux de RPC de 10.56% à 10.83%
 * Deuxième étape du transfert prime/points : 5 points supplémentaires (total : 9 points)
+* Revalorisation indiciaire (PPCR 2/3)
 
 ## 1er janvier 2018
 
@@ -28,6 +33,7 @@ permalink: /evolutions/
 
 * Passage du taux RPC de 9.94% à 10.29%
 * Première étape du transfert prime/points : 4 points
+* Revalorisation de la grille indiciaire (PPCR 1/3)
 
 ## 1er juillet 2016
 
