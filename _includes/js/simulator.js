@@ -506,7 +506,7 @@ $(document).ready(function(){
     $("#validity").append($('<option disabled selected value> -- Sélectionner une date -- </option>'));
     for(var d in date) {
         var dateM = moment(date[d], 'DD/MM/YYYY');
-        $("#validity").append($('<option value="'+date[d]+'" class="'+(dateM < proto ? 'beforeprotocole' : 'protocole')+'">'+date[d]+'</option>'));
+        $("#validity").append($('<option value="'+date[d]+'" class="'+(dateM < protoDate ? 'beforeprotocole' : 'protocole')+'">'+date[d]+'</option>'));
     }
 
     $('#validity').on('change', function(e) {
@@ -518,6 +518,7 @@ $(document).ready(function(){
             if(corps.localeCompare('ieeac') == 0) {
                 $(".result .ieeac, #conditions .ieeac").show();
                 $(".result .ris, #conditions .ris").hide();
+                $('#labelpcs').text('Prime de contrainte de service');
                 $("#corps-icna").addClass('disabled');
                 $("#corps-iessa").addClass('disabled');
                 $("#corps-tseeac").addClass('disabled');
@@ -526,6 +527,7 @@ $(document).ready(function(){
             //après protocole
             $(".result .ieeac, #conditions .ieeac").hide();
             $(".result .ris, #conditions .ris").show();
+            $('#labelpcs').text('Majoration géographique (ex PCS)');
             //autres corps à activer par la suite
             //$("#corps-icna").removeClass('disabled');
             //$("#corps-iessa").removeClass('disabled');
@@ -555,6 +557,12 @@ $(document).ready(function(){
     });
 
     $('#validity').val(defaultDate).change(); //init Form with default date
+
+    $('li.corps.disabled a').on('click', function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return false;
+    });
 
     $('li.corps a').on('click', function(e){
         var c = $(this).closest('li').data('corps');

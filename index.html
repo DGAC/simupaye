@@ -10,7 +10,8 @@ js:
 ---
 
 <div class="alert alert-danger">
-    La revalorisation des grilles indiciaires au 1er janvier 2017 (PPCR) devrait être effective sur les fiches de paye d'octobre 2018.
+    La revalorisation des grilles indiciaires au 1er janvier 2017 (PPCR) devrait être effective sur les fiches de paye d'octobre 2018.<br>
+    Le calcul de la modulation géographique de la part fonction n'est toujours pas connu, une différence d'une dizaine d'euros de la part fonction est donc possible.
 </div>
 
 <div class="container-fluid">
@@ -36,9 +37,9 @@ js:
             </div>
             <ul class="nav nav-pills nav-justified" style="margin-left: 0px">
                 <li class="active corps" id="corps-ieeac" data-corps="ieeac"><a href="#">IEEAC</a></li>
-                <li id="corps-icna" class="corps" data-corps="icna"><a href="#">ICNA</a></li>
-                <li id="corps-tseeac" class="corps" data-corps="tseeac"><a href="#">TSEEAC</a></li>
-                <li id="corps-iessa" class="corps" data-corps="iessa"><a href="#">IESSA</a></li>
+                <li id="corps-icna" class="corps disabled" data-corps="icna"><a href="#">ICNA</a></li>
+                <li id="corps-tseeac" class="corps disabled" data-corps="tseeac"><a href="#">TSEEAC</a></li>
+                <li id="corps-iessa" class="corps disabled" data-corps="iessa"><a href="#">IESSA</a></li>
             </ul>
         </div>
 
@@ -123,7 +124,7 @@ js:
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="pcs" class="col-sm-3 control-label">Prime contrainte de service</label>
+                    <label for="pcs" class="col-sm-3 control-label" id="labelpcs">Majoration géo N/NE (ex PCS)</label>
                     <div class="col-sm-9">
                         <select class="form-control" id="pcs">
                         </select>
