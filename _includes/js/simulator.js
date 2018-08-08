@@ -159,7 +159,7 @@ var compute_income = function() {
         var partTech = 0;
         switch(corps) {
             case "ieeac":
-                if(typeof grade != "undefined") {
+                if(typeof grade != "undefined" && typeof echelon != "undefined" && !isNaN(parseInt(echelon))) {
                     switch (grade) {
                         case "élève":
                             //pas de part tech
@@ -344,7 +344,7 @@ var _rsi = rsi["2016"];
 var _prime_tech = prime_tech["2016"];
 var _evs = evs["2017"];
 var _exp = exp["2017"];
-var _partTechIEEAC = partTechIEEAC["2017"];
+var _partTechIEEAC = partTechIEEAC["2018"];
 var _rpc = rpc_rate["2018"];
 var _transfertPrimes = transfertPrimes["2017"];
 var _transfertRetenue = transfertRetenue["2017"];
@@ -624,7 +624,9 @@ $(document).ready(function(){
             echelForm.empty().append($('<option disabled selected value> -- Sélectionner un échelon -- </option>'));
             if(typeof detachVal != "undefined") {
                 var grille = echelons_detachement[_yearEchelon][detachVal];
-                echelForm.append($('<option value="'+grille[prop]+'">' + prop + '</option>'));
+                for(var prop in grille) {
+                    echelForm.append($('<option value="' + grille[prop] + '">' + prop + '</option>'));
+                }
             }
         } else {
             $("#detachForm").hide();
