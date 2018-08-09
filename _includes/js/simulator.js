@@ -37,8 +37,11 @@ var initForm = function () {
     $('#pcs').append($('<option value="pcs">'+_pcs+' €</option>'));
     $('#pcs').append($('<option value="pcs150">'+pcs150.toFixed(2)+' €</option>'));
 
+    $('#diff').parent().hide();
+
 };
 
+var previous = -1;
 var compute_income = function() {
 
     //assiette de la crds, csg
@@ -325,6 +328,11 @@ var compute_income = function() {
 
     $("#total").text(total.toFixed(2));
 
+    if(previous !== -1) {
+        var diff = total - previous;
+        $('#diff').text(diff.toFixed(2));
+        $('#diff').parent().show();
+    }
 };
 
 //variables par défaut
@@ -693,6 +701,11 @@ $(document).ready(function(){
 
     $('#indem_csg').on('change', function(e){
         compute_income();
+    });
+
+    $('#store').on('click', function(e) {
+        e.preventDefault();
+        previous = parseFloat($('#total').text());
     });
 
     $('[data-toggle="tooltip"]').tooltip();

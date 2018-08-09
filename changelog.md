@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 9 aût 2018
+
+* Possibilité d'enregistrer une valeur de total pour calculer la différence avec les simulations suivantes
+
 ## 6 août 2018
 
 * Prise en compte PPCR : impact sur les grilles au 1er janvier 2017, 2019 et 2020
