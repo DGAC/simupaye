@@ -23,6 +23,7 @@ Textes réglementaires utilisés pour déterminer les calculs du simulateur :
 * Indemnité forfaitaire d'astreinte : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000000246795)
 * Références utilisées pour calculer les retenues (CSG, RAFP, ...) [Service-public.fr](https://www.service-public.fr/particuliers/vosdroits/F468)
 * Taux retenue pension civile : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000023335006&dateTexte=20170724)
+* Grilles indiciaires emplois détachés : [Legifrance](https://www.legifrance.gouv.fr/affichTexteArticle.do;jsessionid=C5D660F1F571970A4CD914F361D1AA29.tplgfr36s_1?cidTexte=JORFTEXT000019463451&idArticle=LEGIARTI000034034515&dateTexte=20190101&categorieLien=id#LEGIARTI000034034515)
 
 ## Autres textes
 * PPCR Transfert primes/points : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000034026392&categorieLien=id)

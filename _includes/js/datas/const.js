@@ -37,7 +37,8 @@ var date = [
     "01/02/2017",
     "01/07/2017",
     "01/01/2018",
-    "01/01/2019"
+    "01/01/2019",
+    "01/01/2020"
 ];
 
 //nombre de points d'indice à ajouter dans le cadre du transfert primes/points
