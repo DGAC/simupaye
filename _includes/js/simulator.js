@@ -54,7 +54,7 @@ var compute_income = function() {
     }
 
     //transfert primes/points à partir du 1er janvier 2017
-    indice += _transfertPrimes;
+    //indice += _transfertPrimes;
 
     var traitement_brut = Math.round(indice*_point_indice*100)/100;
     total_pos += traitement_brut;
