@@ -7,6 +7,12 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 18 novembre 2018
+
+* Correction PPCR
+* Ajout ligne Retenue PC NBI
+* Corrections de certaines grilles
+
 ## 9 aût 2018
 
 * Possibilité d'enregistrer une valeur de total pour calculer la différence avec les simulations suivantes

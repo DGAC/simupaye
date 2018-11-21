@@ -53,9 +53,6 @@ var compute_income = function() {
         indice = 0;
     }
 
-    //transfert primes/points à partir du 1er janvier 2017
-    //indice += _transfertPrimes;
-
     var traitement_brut = Math.round(indice*_point_indice*100)/100;
     total_pos += traitement_brut;
 
@@ -260,8 +257,12 @@ var compute_income = function() {
     retenues += crds;
 
     //retenue pour pension civile
-    var rpc = (traitement_brut + nbi) * _rpc / 100;
+    var rpc = traitement_brut * _rpc / 100;
     retenues += rpc;
+
+    //retenue PC NBI
+    var rpcnbi = nbi * _rpc / 100;
+    retenues += rpcnbi;
 
     //rafp
     var rafp = 0;
@@ -298,7 +299,16 @@ var compute_income = function() {
 
     //remplissage des champs
     $("#traitement_brut").text(traitement_brut);
-    $("#nbi").text(nbi.toFixed(2));
+    if(nbi > 0) {
+        $("#nbi").text(nbi.toFixed(2)).parent().show();
+    } else {
+        $("#nbi").parent().hide();
+    }
+    if(rpcnbi > 0) {
+        $("#rpcnbi").text("- " + rpcnbi.toFixed(2)).parent().show();
+    } else {
+        $("#rpcnbi").parent().hide();
+    }
     $('#indem_res').text(indem.toFixed(2));
     $("#crds").text("- " + crds.toFixed(2));
     if(currentMoment < csgDate) {
@@ -354,7 +364,6 @@ var _evs = evs["2017"];
 var _exp = exp["2017"];
 var _partTechIEEAC = partTechIEEAC["2018"];
 var _rpc = rpc_rate["2018"];
-var _transfertPrimes = transfertPrimes["2017"];
 var _transfertRetenue = transfertRetenue["2017"];
 var _modulationIEEAC = modulation_ieeac["2017"];
 var _modulationGeoIEEAC = modulation_geo_ieeac["2017"];
@@ -372,7 +381,6 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
-        _transfertPrimes = transfertPrimes["2016"];
         _transfertRetenue = transfertRetenue["2016"];
         _rpc = rpc_rate["2016"];
         _csg_deduc = csg_deduc["2017"];
@@ -387,7 +395,6 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
-        _transfertPrimes = transfertPrimes["2016"];
         _transfertRetenue = transfertRetenue["2016"];
         _rpc = rpc_rate["2016"];
         _csg_deduc = csg_deduc["2017"];
@@ -403,7 +410,6 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
         _rpc = rpc_rate["2017"];
-        _transfertPrimes = transfertPrimes["2017"];
         _transfertRetenue = transfertRetenue["2017"];
         _csg_deduc = csg_deduc["2017"];
     } else if (currentDate.localeCompare('01/02/2017') == 0){
@@ -418,7 +424,6 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
         _rpc = rpc_rate["2017"];
-        _transfertPrimes = transfertPrimes["2017"];
         _transfertRetenue = transfertRetenue["2017"];
         _csg_deduc = csg_deduc["2017"];
     } else if (currentDate.localeCompare('01/07/2017') == 0){
@@ -433,7 +438,6 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2017"];
         _rpc = rpc_rate["2017"];
-        _transfertPrimes = transfertPrimes["2017"];
         _transfertRetenue = transfertRetenue["2017"];
         _csg_deduc = csg_deduc["2017"];
     } else if (currentDate.localeCompare('01/01/2018') == 0){
@@ -448,7 +452,6 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2018"];
         _rpc = rpc_rate["2018"];
-        _transfertPrimes = transfertPrimes["2017"];
         _transfertRetenue = transfertRetenue["2017"];
         _csg_deduc = csg_deduc["2018"];
     } else if (currentDate.localeCompare('01/01/2019') == 0){
@@ -463,7 +466,6 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2019"];
         _rpc = rpc_rate["2019"];
-        _transfertPrimes = transfertPrimes["2019"];
         _transfertRetenue = transfertRetenue["2019"];
         _csg_deduc = csg_deduc["2018"];
     } else if (currentDate.localeCompare('01/01/2020') == 0){ //TODO
@@ -478,7 +480,6 @@ var initVar = function() {
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2019"];
         _rpc = rpc_rate["2019"];
-        _transfertPrimes = transfertPrimes["2019"];
         _transfertRetenue = transfertRetenue["2019"];
         _csg_deduc = csg_deduc["2018"];
     }

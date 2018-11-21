@@ -41,13 +41,6 @@ var date = [
     "01/01/2020"
 ];
 
-//nombre de points d'indice à ajouter dans le cadre du transfert primes/points
-var transfertPrimes = {
-    "2016": 0,
-    "2017": 4,
-    "2019": 9
-};
-
 //retenue à ajouter dans le cadre du transfert primes/points
 var transfertRetenue = {
     "2016": 0,
