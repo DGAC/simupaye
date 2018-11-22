@@ -48,7 +48,7 @@ var compute_income = function() {
     var total_pos = 0;
 
     //calcul de l'indice
-    var indice = parseInt($("#echelon option:selected").val());
+    var indice = table_indices[$("#echelon option:selected").val()];
     if(isNaN(indice)){
         indice = 0;
     }
@@ -120,7 +120,7 @@ var compute_income = function() {
     //calculs spécifiques avant ou après RIST
     var grade = $("#grade option:selected").val();
     if(proto) {
-        //part fonction, inclus la pcs
+        //part fonction
         var niveauEVS = parseInt($('#evs').val());
         var partFonction = 0;
         if(!isNaN(niveauEVS)) {
@@ -276,8 +276,9 @@ var compute_income = function() {
 
     //contribution solidarité
     //supprimée lors de l'augmentation de la csg en 2018
+    var cs = 0;
     if(currentMoment < csgDate) {
-        var cs = (total_pos - rpc - rafp) * 1 / 100;
+        cs = (total_pos - rpc - rafp) * 1 / 100;
         retenues += cs;
     }
 
@@ -290,6 +291,9 @@ var compute_income = function() {
     //transfert primes/points
     var transfert = _transfertRetenue;
     retenues += transfert;
+
+    var totalImposable = traitement_brut + nbi + indem + sft + partFonction + partExp + pcsValue + partTech
+        - rafp - csg_deduc - cs - rpc - rpcnbi;
 
     var total = total_pos - retenues + rembt;
 
@@ -336,6 +340,7 @@ var compute_income = function() {
         $("#special").text(special.toFixed(2));
     }
 
+    $("#imposable").text(totalImposable.toFixed(2));
     $("#total").text(total.toFixed(2));
 
     if(previous !== -1) {

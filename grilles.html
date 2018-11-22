@@ -1,0 +1,59 @@
+---
+layout: simulator
+title: Grilles indiciaires
+js:
+ - js/moment.min.js
+ - js/datas/grilles.js
+ - js/datas/const.js
+ - js/populate_grilles.js
+---
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="grille" class="col-sm-7 control-label">Grille</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" id="grille">
+                            <option disabled selected value> -- Sélectionner la grille -- </option>
+                            <option value="ieeac">IEEAC</option>
+                            <option value="CTAC">CTAC</option>
+                            <option value="CSTAC">CSTAC</option>
+                            <option value="CUTAC">CUTAC</option>
+                            <option value="CST">CST</option>
+                            <option value="CSTP">CSTP</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="validity" class="col-sm-7 control-label">Date de validité</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" id="validity">
+
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-8 col-md-offset-2">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Niveau</th>
+                    <th>Indice brut</th>
+                    <th>Indice majoré</th>
+                </tr>
+                </thead>
+                <tbody id="grilleContent">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

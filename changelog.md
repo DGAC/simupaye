@@ -7,6 +7,12 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 23 novembre 2018
+
+* Utilisation des indices bruts à la place des indices majorés pour faciliter la vérification avec les textes
+* Ajout d'une page pour accéder aux grilles indiciaires en fonction de l'année
+* Ajout du total imposable (expérimental)
+
 ## 18 novembre 2018
 
 * Correction PPCR
