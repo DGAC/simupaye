@@ -51,6 +51,9 @@ var compute_income = function() {
     var indice = table_indices[$("#echelon option:selected").val()];
     if(isNaN(indice)){
         indice = 0;
+        $("#tooltipEchelon").attr('title', "");
+    } else {
+        $("#tooltipEchelon").attr('title', "Indice majoré : "+indice);
     }
 
     var traitement_brut = Math.round(indice*_point_indice*100)/100;
@@ -292,7 +295,7 @@ var compute_income = function() {
     var transfert = _transfertRetenue;
     retenues += transfert;
 
-    var totalImposable = traitement_brut + nbi + indem + sft + partFonction + partExp + pcsValue + partTech
+    var totalImposable = total_pos
         - rafp - csg_deduc - cs - rpc - rpcnbi;
 
     var total = total_pos - retenues + rembt;

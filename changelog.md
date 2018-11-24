@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 24 novembre 2018
+
+* Correction total imposable
+
 ## 23 novembre 2018
 
 * Utilisation des indices bruts à la place des indices majorés pour faciliter la vérification avec les textes
@@ -19,7 +23,7 @@ permalink: /changelog/
 * Ajout ligne Retenue PC NBI
 * Corrections de certaines grilles
 
-## 9 aût 2018
+## 9 août 2018
 
 * Possibilité d'enregistrer une valeur de total pour calculer la différence avec les simulations suivantes
 
