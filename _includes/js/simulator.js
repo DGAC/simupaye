@@ -87,7 +87,7 @@ var compute_income = function() {
         maj = 1.05;
     }
 
-    //pcs
+    //pcs : majoration de la part fonction non incluse dans le plafonnement à 120%
     var pcsValue = 0;
     var pcsOption = $("#pcs option:selected").val();
     if(typeof pcsOption == "undefined") {
@@ -132,12 +132,16 @@ var compute_income = function() {
 
         total_pos += pcsValue;
 
-        //modulation géographique N/NE
-        //normalement incluse dans la part Fonction
+        //modulation géographique N/NE de la part Fonction
         //à ne pas confondre avec la majoration N/NE, ancienne PCS
         var modulationPF = 0;
         if(maj > 1 && !isNaN(niveauEVS)) {
             modulationPF = _modulationGeoIEEAC[niveauEVS];
+        }
+
+        var rma = 0;
+        if($("#rma").is(':checked')) {
+            modulationPF += modulationRMA;
         }
 
         //part expérience
@@ -253,6 +257,13 @@ var compute_income = function() {
         compCSG = temp;
     }
 
+    var other = 0;
+    temp = parseFloat($('#other').val());
+    if(!isNaN(temp)) {
+        other = temp;
+    }
+    total_pos += other;
+
     var retenues = 0;
 
     //crds
@@ -327,7 +338,6 @@ var compute_income = function() {
     $("#csg_deduc").text("- " + csg_deduc.toFixed(2));
     $('#csg_non_deduc').text("- " + csg_non_deduc.toFixed(2));
     $("#rpc").text("- " + rpc.toFixed(2));
-    $("#pcsV").text(pcsValue.toFixed(2));
     $("#sft").text(sft.toFixed(2));
     $("#transfert").text("- " + transfert.toFixed(2));
 
@@ -335,12 +345,21 @@ var compute_income = function() {
         $("#part_fonction").text(partFonction.toFixed(2));
         $("#part_xp").text(partExp.toFixed(2));
         $("#part_technique").text(partTech.toFixed(2));
-        $("#ris_maj").text(pcsValue.toFixed(2));
+        if(pcsValue > 0) {
+            $("#ris_maj").text(pcsValue.toFixed(2)).parent().show();
+        } else {
+            $("#ris_maj").parent().hide();
+        }
     } else {
         $("#rsiV").text(rsiValue.toFixed(2));
         $("#activity").text(primeActivity.toFixed(2));
         $("#tech").text(technicity.toFixed(2));
         $("#special").text(special.toFixed(2));
+        if(pcsValue > 0) {
+            $("#pcsV").text(pcsValue.toFixed(2)).parent().show();
+        } else {
+            $("#pcsV").parent().hide();
+        }
     }
 
     $("#imposable").text(totalImposable.toFixed(2));
@@ -709,6 +728,14 @@ $(document).ready(function(){
     });
 
     $('#indem_csg').on('change', function(e){
+        compute_income();
+    });
+
+    $('#rma').on('change', function(e) {
+       compute_income();
+    });
+
+    $("#other").on('change', function(e){
         compute_income();
     });
 

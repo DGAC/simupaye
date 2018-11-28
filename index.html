@@ -101,16 +101,6 @@ js:
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="affect" class="col-sm-3 control-label">Site d'affectation</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="affect">
-                            <option disabled selected value> -- Sélectionner votre site d'affectation -- </option>
-                            <option value="n-ne">Nord/Nord-Est</option>
-                            <option value="other">Autre</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="region" class="col-sm-3 control-label">Zone de résidence<sup><a data-toggle="tooltip" title="Comment déterminer mon barême ?" data-placement="top" href="http://www.fonction-publique.gouv.fr/indemnites-de-residence-et-supplement-familial-de-traitement" target="_blank">?</a></sup></label>
                     <div class="col-sm-9">
                         <select class="form-control" id="region">
@@ -123,23 +113,58 @@ js:
                         <input type="number" class="form-control" id="famille">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="pcs" class="col-sm-3 control-label" id="labelpcs">Majoration géo N/NE (ex PCS)</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="pcs">
-                        </select>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Majorations et modulations</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="pcs" class="col-sm-3 control-label" id="labelpcs">Majoration géo N/NE (ex PCS)</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="pcs">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="affect" class="col-sm-3 control-label">Site d'affectation</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="affect">
+                                    <option disabled selected value> -- Sélectionner votre site d'affectation -- </option>
+                                    <option value="n-ne">Nord/Nord-Est</option>
+                                    <option value="other">Autre</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group ris">
+                            <label class="col-sm-3 control-label">Responsable de mission d'audit</label>
+                            <div class="col-sm-9">
+                                <input type="checkbox" id="rma">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="rembt" class="col-sm-3 control-label">Remboursement dom-travail</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="rembt">
-                    </div>
-                </div>
-                <div class="form-group" id="comp_csg">
-                    <label for="indem_csg" class="col-sm-3 control-label">Compensation CSG</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="indem_csg">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Autres</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="rembt" class="col-sm-3 control-label">Remboursement dom-travail</label>
+                            <div class="col-sm-9 input-group">
+                                <input type="text" class="form-control" id="rembt">
+                                <div class="input-group-addon">€</div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="comp_csg">
+                            <label for="indem_csg" class="col-sm-3 control-label">Compensation CSG</label>
+                            <div class="col-sm-9 input-group">
+                                <input type="text" class="form-control" id="indem_csg">
+                                <div class="input-group-addon">€</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="other" class="col-sm-3 control-label">Autre revenu imposable</label>
+                            <div class="col-sm-9 input-group">
+                                <input type="text" class="form-control" id="other">
+                                <div class="input-group-addon">€</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>

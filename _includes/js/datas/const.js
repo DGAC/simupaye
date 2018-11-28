@@ -53,6 +53,9 @@ var csg_deduc = {
     "2018": 6.8
 };
 
+//modulation de la part Fonction pour les IEEAC RMA
+var modulationRMA = 100;
+
 //correspondance indice brut indice majoré
 var table_indices = {
     "100": 203,

@@ -7,6 +7,12 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 28 novembre 2018
+
+* Ajout Modulation DSAC
+* Ajout champ "Autre revenus imposables"
+* Mise à jour esthétique
+
 ## 24 novembre 2018
 
 * Correction total imposable
