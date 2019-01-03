@@ -309,7 +309,15 @@ var compute_income = function() {
     var totalImposable = total_pos
         - rafp - csg_deduc - cs - rpc - rpcnbi;
 
-    var total = total_pos - retenues + rembt;
+    var retenueIR = 0;
+    if(currentMoment >= irDate) {
+        var irTaux = parseFloat($("#tauxIR").val());
+        if(!isNaN(irTaux)) {
+            retenueIR = totalImposable * irTaux / 100;
+        }
+    }
+
+    var total = total_pos - retenues + rembt - retenueIR;
 
     if(currentMoment >= csgDate) {
         total += compCSG;
@@ -340,6 +348,8 @@ var compute_income = function() {
     $("#rpc").text("- " + rpc.toFixed(2));
     $("#sft").text(sft.toFixed(2));
     $("#transfert").text("- " + transfert.toFixed(2));
+
+    $("#ir").text("- " + retenueIR.toFixed(2));
 
     if(proto) {
         $("#part_fonction").text(partFonction.toFixed(2));
@@ -374,12 +384,13 @@ var compute_income = function() {
 
 //variables par défaut
 var corps = 'ieeac';
-var defaultDate = '01/01/2018';
+var defaultDate = '01/01/2019';
 var protoDate = moment('2017-07-01');
 var transfertDate = moment('2017-01-01');
 var csgDate = moment('2018-01-01');
 var currentMoment;
-var currentDate = '01/01/2018';
+var currentDate = '01/01/2019';
+var irDate = moment('2019-01-01');
 var proto = true;
 var _pcs = pcs["2017"];
 var _activity_rate = activity_rate["2016"];
@@ -583,6 +594,13 @@ $(document).ready(function(){
             $('#ccsg').parent().show();
             $("#cs").parent().hide();
         }
+        if(currentMoment < irDate) {
+            $("#tauxIRGroup").hide();
+            $("#ir").parent().hide();
+        } else {
+            $("#tauxIRGroup").show();
+            $("#ir").parent().show();
+        }
         initVar();
         //changement de valeur pour la PCS
         $('#pcs option[value="pcs"]').text(_pcs);
@@ -736,6 +754,10 @@ $(document).ready(function(){
     });
 
     $("#other").on('change', function(e){
+        compute_income();
+    });
+
+    $("#tauxIR").on('change', function(e){
         compute_income();
     });
 

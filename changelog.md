@@ -7,11 +7,16 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 3 janvier 2019
+
+* Ajout prélèvement à la source
+
 ## 28 novembre 2018
 
 * Ajout Modulation DSAC
 * Ajout champ "Autre revenus imposables"
 * Mise à jour esthétique
+
 
 ## 24 novembre 2018
 

@@ -165,6 +165,13 @@ js:
                                 <div class="input-group-addon">€</div>
                             </div>
                         </div>
+                        <div class="form-group" id="tauxIRGroup">
+                            <label for="tauxIR" class="col-sm-3 control-label">Taux imposition sur le revenu</label>
+                            <div class="col-sm-9 input-group">
+                                <input type="number" min="0" max="100" class="form-control" id="tauxIR">
+                                <div class="input-group-addon">%</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -263,6 +270,10 @@ js:
                         <td>Transfert primes/points</td>
                         <td id="transfert"></td>
                     </tr>
+                    <tr>
+                        <td>Impôt sur le revenu</td>
+                        <td id="ir"></td>
+                    </tr>
                     <tr class="success">
                         <td>Total <a href="#" id="store"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span></a></td>
                         <td id="total"></td>
@@ -272,7 +283,7 @@ js:
                         <td id="imposable"></td>
                     </tr>
                     <tr>
-                        <td>Différence</td>
+                        <td>Différence calcul précédent</td>
                         <td id="diff"></td>
                     </tr>
                 </table>
