@@ -622,8 +622,10 @@ $(document).ready(function(){
         var c = $(this).closest('li').data('corps');
         if(c.localeCompare('ieeac') != 0) {
             $("#validity option.beforeprotocole").attr('disabled', 'disabled');
+            $("#evs").attr("min", 0);
         } else {
             $("#validity option.beforeprotocole").removeAttr('disabled');
+            $("#evs").attr("min", 10);
         }
         compute_income();
     });
