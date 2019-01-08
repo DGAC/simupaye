@@ -306,8 +306,12 @@ var compute_income = function() {
     var transfert = _transfertRetenue;
     retenues += transfert;
 
+    if(currentMoment >= csgDate) {
+        total_pos += compCSG;
+    }
+
     var totalImposable = total_pos
-        - rafp - csg_deduc - cs - rpc - rpcnbi;
+        - rafp - csg_deduc - cs - rpc - rpcnbi - transfert;
 
     var retenueIR = 0;
     if(currentMoment >= irDate) {
@@ -318,10 +322,6 @@ var compute_income = function() {
     }
 
     var total = total_pos - retenues + rembt - retenueIR;
-
-    if(currentMoment >= csgDate) {
-        total += compCSG;
-    }
 
     //remplissage des champs
     $("#traitement_brut").text(traitement_brut);

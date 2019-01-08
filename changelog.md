@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 8 janvier 2019
+
+* Correction calcul total imposable
+
 ## 3 janvier 2019
 
 * Ajout prélèvement à la source
