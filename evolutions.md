@@ -7,6 +7,7 @@ permalink: /evolutions/
 ## 1er janvier 2020
 
 * Revalorisation indiciaire (PPCR)
+* Revalorisation part Technique pour les IEEAC
 
 ## 1er janvier 2019
 
