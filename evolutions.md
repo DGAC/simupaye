@@ -7,12 +7,12 @@ permalink: /evolutions/
 ## 1er janvier 2020
 
 * Revalorisation indiciaire (PPCR)
-* Revalorisation part Technique pour les IEEAC
 
 ## 1er janvier 2019
 
 * Passage du taux de RPC de 10.56% à 10.83%
 * Deuxième étape du transfert prime/points : 5 points supplémentaires (total : 9 points) (PPCR)
+* Revalorisation part Technique pour les IEEAC
 
 ## 1er janvier 2018
 
@@ -27,7 +27,7 @@ permalink: /evolutions/
 ## 1er février 2017
 
 * Passage de la valeur du point d'indice de 4.6581 à 4.6860
-  * Conséquence : passage de la PCS de 103.01€ à 103.63€
+* Conséquence : passage de la PCS de 103.01€ à 103.63€
 
 ## 1er janvier 2017
 
