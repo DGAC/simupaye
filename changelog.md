@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 7 janvier 2020
+
+* Changement date d'application par défaut au 1/1/2020
+
 ## 8 janvier 2019
 
 * Correction calcul total imposable
