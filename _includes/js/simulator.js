@@ -517,7 +517,7 @@ var initVar = function() {
         _evs = evs["2017"];
         _exp = exp["2017"];
         _partTechIEEAC = partTechIEEAC["2019"];
-        _rpc = rpc_rate["2019"];
+        _rpc = rpc_rate["2020"];
         _transfertRetenue = transfertRetenue["2019"];
         _csg_deduc = csg_deduc["2018"];
     }

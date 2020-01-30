@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 30 janvier 2020
+
+* Correction taux RPC au 1er janvier 2020
+
 ## 7 janvier 2020
 
 * Changement date d'application par défaut au 1/1/2020
