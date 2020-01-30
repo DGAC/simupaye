@@ -6,6 +6,7 @@ permalink: /evolutions/
 
 ## 1er janvier 2020
 
+* Passage du taux de RPC de 10.83% à 11.10%
 * Revalorisation indiciaire (PPCR)
 
 ## 1er janvier 2019
