@@ -384,7 +384,7 @@ var compute_income = function() {
 
 //variables par défaut
 var corps = 'ieeac';
-var defaultDate = '01/01/2020';
+var defaultDate = '01/07/2022';
 var protoDate = moment('2017-07-01');
 var transfertDate = moment('2017-01-01');
 var csgDate = moment('2018-01-01');
@@ -506,12 +506,26 @@ var initVar = function() {
         _rpc = rpc_rate["2019"];
         _transfertRetenue = transfertRetenue["2019"];
         _csg_deduc = csg_deduc["2018"];
-    } else if (currentDate.localeCompare('01/01/2020') == 0){ //TODO
+    } else if (currentDate.localeCompare('01/01/2020') == 0){
         proto = true;
         _pcs = pcs["2017"];
         _activity_rate = activity_rate["2016"];
         _yearEchelon = "2020";
         _point_indice = point_indice["2017"];
+        _rsi = rsi["2016"];
+        _prime_tech = prime_tech["2016"];
+        _evs = evs["2017"];
+        _exp = exp["2017"];
+        _partTechIEEAC = partTechIEEAC["2019"];
+        _rpc = rpc_rate["2020"];
+        _transfertRetenue = transfertRetenue["2019"];
+        _csg_deduc = csg_deduc["2018"];
+    } else if (currentDate.localeCompare('01/07/2022') == 0){
+        proto = true;
+        _pcs = pcs["2017"];
+        _activity_rate = activity_rate["2016"];
+        _yearEchelon = "2020";
+        _point_indice = point_indice["2022"];
         _rsi = rsi["2016"];
         _prime_tech = prime_tech["2016"];
         _evs = evs["2017"];

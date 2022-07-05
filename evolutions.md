@@ -4,6 +4,10 @@ title: Évolutions de salaire
 permalink: /evolutions/
 ---
 
+## 1er juillet 2022
+
+* Revalorisation du point d'indice de 3.5%
+
 ## 1er janvier 2020
 
 * Passage du taux de RPC de 10.83% à 11.10%
