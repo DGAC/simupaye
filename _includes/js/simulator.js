@@ -384,7 +384,7 @@ var compute_income = function() {
 
 //variables par défaut
 var corps = 'ieeac';
-var defaultDate = '01/07/2022';
+var defaultDate = '01/01/2023';
 var protoDate = moment('2017-07-01');
 var transfertDate = moment('2017-01-01');
 var csgDate = moment('2018-01-01');

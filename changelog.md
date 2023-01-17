@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 17 janvier 2023
+
+* Prise en compte revalorisation des primes de 3.5% au 1er janvier 2023
+
 ## 5 juillet 2022
 
 * Prise en compte revalorisation du point d'indice de 3.5% au 1er juillet 2022
