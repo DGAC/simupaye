@@ -41,7 +41,8 @@ var date = [
     "01/01/2018",
     "01/01/2019",
     "01/01/2020",
-    "01/07/2022"
+    "01/07/2022",
+    "01/01/2023"
 ];
 
 //retenue à ajouter dans le cadre du transfert primes/points
