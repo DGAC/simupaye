@@ -19,12 +19,12 @@ Textes réglementaires utilisés pour déterminer les calculs du simulateur :
 
 ## Textes généraux
 * Conditions d'avancement dans les emplois détachés (CTAC, CUTAC, ...) [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=LEGITEXT000019057771)
-* Fonctions requises pour l'accès aux emplois détachés : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=LEGITEXT000031277018)
+* Fonctions requises pour l'accès aux emplois détachés : [Legifrance](https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000044593142)
 * Prime de contrainte de service : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=LEGITEXT000019678445)
 * Indemnité forfaitaire d'astreinte : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000000246795)
 * Références utilisées pour calculer les retenues (CSG, RAFP, ...) [Service-public.fr](https://www.service-public.fr/particuliers/vosdroits/F468)
 * Taux retenue pension civile : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000023335006&dateTexte=20170724)
-* Grilles indiciaires emplois détachés : [Legifrance](https://www.legifrance.gouv.fr/affichTexteArticle.do;jsessionid=C5D660F1F571970A4CD914F361D1AA29.tplgfr36s_1?cidTexte=JORFTEXT000019463451&idArticle=LEGIARTI000034034515&dateTexte=20190101&categorieLien=id#LEGIARTI000034034515)
+* Grilles indiciaires emplois détachés : [Legifrance](https://www.legifrance.gouv.fr/loda/id/LEGIARTI000037610227/)
 
 ## Autres textes
 * PPCR Transfert primes/points : [Legifrance](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000034026392&categorieLien=id)
