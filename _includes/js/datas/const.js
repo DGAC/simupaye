@@ -2,7 +2,8 @@ var point_indice = {
     "2015" : 4.6303,
     "2016" : 4.6581, //à partir du 1/7/16
     "2017" : 4.68602, //à partir du 1/2/17
-    "2022" : 4.85003  //à partir du 1/7/22
+    "2022" : 4.85003,  //à partir du 1/7/22
+    "2023" : 4.92278 //à partir du 1/7/23
 };
 
 // retenue pension civile
@@ -42,7 +43,8 @@ var date = [
     "01/01/2019",
     "01/01/2020",
     "01/07/2022",
-    "01/01/2023"
+    "01/01/2023",
+    "01/07/2023"
 ];
 
 //retenue à ajouter dans le cadre du transfert primes/points

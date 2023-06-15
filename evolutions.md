@@ -4,6 +4,10 @@ title: Évolutions de salaire
 permalink: /evolutions/
 ---
 
+## 1er juillet 2023
+
+* Revalorisation du point d'indice de 1.5%
+
 ## 1er janvier 2023
 
 * Revalorisation des primes RIST de 3.5%
