@@ -321,7 +321,13 @@ var compute_income = function() {
         }
     }
 
-    var total = total_pos - retenues + rembt - retenueIR;
+    var othernon = 0;
+    temp = parseFloat($('#other-non').val());
+    if(!isNaN(temp)) {
+        othernon = temp;
+    }
+
+    var total = total_pos - retenues + rembt +othernon - retenueIR;
 
     //remplissage des champs
     $("#traitement_brut").text(traitement_brut);
@@ -798,6 +804,10 @@ $(document).ready(function(){
     });
 
     $("#other").on('change', function(e){
+        compute_income();
+    });
+
+    $("#other-non").on('change', function(e){
         compute_income();
     });
 

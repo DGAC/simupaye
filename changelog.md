@@ -10,6 +10,7 @@ permalink: /changelog/
 ## 15 juin 2023
 
 * Prise en compte revalorisation point d'indice au 1er juillet 2023
+* Ajout champ revenus non imposables (forfait télétravail)
 
 ## 17 janvier 2023
 
