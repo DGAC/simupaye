@@ -4,6 +4,10 @@ title: Évolutions de salaire
 permalink: /evolutions/
 ---
 
+## 1er janvier 2024
+
+* Ajout de 5 points d'indice (décret 2023-519)
+
 ## 1er juillet 2023
 
 * Revalorisation du point d'indice de 1.5%

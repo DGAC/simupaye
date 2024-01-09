@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 9 janvier 2024
+
+* Prise en compte du décret n°2023-519 du 28 juin 2023 ajoutant 5 points à l'indice majoré à partir du 1er janvier 2024.
+
 ## 15 juin 2023
 
 * Prise en compte revalorisation point d'indice au 1er juillet 2023

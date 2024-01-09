@@ -44,7 +44,8 @@ var date = [
     "01/01/2020",
     "01/07/2022",
     "01/01/2023",
-    "01/07/2023"
+    "01/07/2023",
+    "01/01/2024"
 ];
 
 //retenue à ajouter dans le cadre du transfert primes/points
@@ -63,6 +64,7 @@ var csg_deduc = {
 var modulationRMA = 100;
 
 //correspondance indice brut indice majoré
+//majoration de 5 points d'indice majoré du décret 2023-519 prise en compte dans le simu par calcul
 var table_indices = {
     "100": 203,
     "101": 204,
