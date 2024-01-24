@@ -546,7 +546,7 @@ var initVar = function() {
         _csg_deduc = csg_deduc["2018"];
     } else if (currentDate.localeCompare('01/01/2023') == 0){
         proto = true;
-        _pcs = pcs["2017"];
+        _pcs = pcs["2023"];
         _activity_rate = activity_rate["2016"];
         _yearEchelon = "2020";
         _point_indice = point_indice["2022"];
@@ -560,7 +560,7 @@ var initVar = function() {
         _csg_deduc = csg_deduc["2018"];
     } else if (currentDate.localeCompare('01/07/2023') == 0){
         proto = true;
-        _pcs = pcs["2017"];
+        _pcs = pcs["2023"];
         _activity_rate = activity_rate["2016"];
         _yearEchelon = "2020";
         _point_indice = point_indice["2023"];
@@ -574,15 +574,15 @@ var initVar = function() {
         _csg_deduc = csg_deduc["2018"];
     } else if (currentDate.localeCompare('01/01/2024') == 0){
         proto = true;
-        _pcs = pcs["2017"];
+        _pcs = pcs["2024"];
         _activity_rate = activity_rate["2016"];
         _yearEchelon = "2020";
         _point_indice = point_indice["2023"];
         _rsi = rsi["2016"];
         _prime_tech = prime_tech["2016"];
-        _evs = evs["2023"];
-        _exp = exp["2023"];
-        _partTechIEEAC = partTechIEEAC["2023"];
+        _evs = evs["2024"];
+        _exp = exp["2024"];
+        _partTechIEEAC = partTechIEEAC["2024"];
         _rpc = rpc_rate["2020"];
         _transfertRetenue = transfertRetenue["2019"];
         _csg_deduc = csg_deduc["2018"];

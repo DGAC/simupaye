@@ -7,6 +7,7 @@ permalink: /evolutions/
 ## 1er janvier 2024
 
 * Ajout de 5 points d'indice (décret 2023-519)
+* Revalorisation des primes RIST de 1.5%
 
 ## 1er juillet 2023
 

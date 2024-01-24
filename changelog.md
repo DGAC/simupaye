@@ -7,6 +7,11 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 24 janvier 2024
+
+* Prise en compte de la revalorisation des primes de 1.5% au 1er janvier 2024
+* Correction valeur majoration géographique pour les personnels de la région N/NE
+
 ## 9 janvier 2024
 
 * Prise en compte du décret n°2023-519 du 28 juin 2023 ajoutant 5 points à l'indice majoré à partir du 1er janvier 2024.
