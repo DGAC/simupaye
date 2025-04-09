@@ -4,6 +4,10 @@ title: Évolutions de salaire
 permalink: /evolutions/
 ---
 
+## 1er juillet 2025
+
+* Modification grilles IEEAC pour prise en compte HEB
+
 ## 1er janvier 2024
 
 * Ajout de 5 points d'indice (décret 2023-519)

@@ -586,6 +586,20 @@ var initVar = function() {
         _rpc = rpc_rate["2020"];
         _transfertRetenue = transfertRetenue["2019"];
         _csg_deduc = csg_deduc["2018"];
+    } else if (currentDate.localeCompare('01/07/2025') == 0){
+        proto = true;
+        _pcs = pcs["2024"];
+        _activity_rate = activity_rate["2016"];
+        _yearEchelon = "2025";
+        _point_indice = point_indice["2023"];
+        _rsi = rsi["2016"];
+        _prime_tech = prime_tech["2016"];
+        _evs = evs["2024"];
+        _exp = exp["2024"];
+        _partTechIEEAC = partTechIEEAC["2024"];
+        _rpc = rpc_rate["2020"];
+        _transfertRetenue = transfertRetenue["2019"];
+        _csg_deduc = csg_deduc["2018"];
     }
 };
 

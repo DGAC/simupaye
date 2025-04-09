@@ -7,6 +7,10 @@ permalink: /changelog/
 
 # Dernières modifications du simulateur
 
+## 9 avril 2025
+
+* Prise en compte HEB à partir du 1er juillet 2025
+
 ## 24 janvier 2024
 
 * Prise en compte de la revalorisation des primes de 1.5% au 1er janvier 2024
